@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="stylesheet" href="style.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+  <script src="../../_shared_assets/deps/reconnecting-websocket.min.js"></script>
+  <script src="../../_shared_assets/deps/jquery.bandit.js"></script>
+</head>
+
+<body>
+  <div class="wrapper">
+    <div class="video-area">
+      <!-- <div class="startingText" id="startingText">until the start...</div> -->
+      <!-- <img id="fg" src="../../../_shared_assets/design/agts/starting_fg.png"> -->
+      <div id="draftTransition">
+        <video id="transitionStinger" muted playsinline>
+          <source src="../../_shared_assets/design/draft_transition.webm" type="video/webm">
+        </video>
+      </div>
+      <div id="spinner">
+        <div id="spinner-text">
+          <div id="spinner-text-front">Seed</div>
+          <div id="spinner-text-back">A</div>
+        </div>
+        <div id="spinner-opacity-overlay"></div>
+        <div id="spinner-content-seed-a" class="spinner-content">
+          <ul id="player-list-seed-a" class="player-list">
+            <!-- <li class="player">
+              <img class="player-pfp" src="https://a.ppy.sh/3995630"></img>
+              <span class="player-name">Player One</span>
+            </li> -->
+          </ul>
+        </div>
+        <div id="spinner-content-seed-b" class="spinner-content">
+          <ul id="player-list-seed-b" class="player-list">
+          </ul>
+        </div>
+        <div id="spinner-content-seed-c" class="spinner-content">
+          <ul id="player-list-seed-c" class="player-list">
+          </ul>
+        </div>
+      </div>
+      <div id="team">
+        <div id="team-text">
+          <div id="team-text-front">Team 01</div>
+          <div id="team-text-back">01</div>
+        </div>
+        <div id="team-seed-a" class="team-seed">
+          <div id="team-seed-a-players" class="team-seed-players">
+            <div class="player-seed">
+              <img id="team-seed-a-player-1-pfp" class="player-pfp" src="https://lous.s-ul.eu/NoNVoJCf"></img>
+              <span id="team-seed-a-player-1-name" class="player-name"></span>
+            </div>
+            <div class="player-seed">
+              <img id="team-seed-a-player-2-pfp" class="player-pfp" src="https://lous.s-ul.eu/NoNVoJCf"></img>
+              <span id="team-seed-a-player-2-name" class="player-name"></span>
+            </div>
+          </div>
+        </div>
+        <div id="team-seed-b" class="team-seed">
+          <div id="team-seed-b-players" class="team-seed-players">
+            <div class="player-seed">
+              <img id="team-seed-b-player-1-pfp" class="player-pfp" src="https://lous.s-ul.eu/NoNVoJCf"></img>
+              <span id="team-seed-b-player-1-name" class="player-name"></span>
+            </div>
+            <div class="player-seed">
+              <img id="team-seed-b-player-2-pfp" class="player-pfp" src="https://lous.s-ul.eu/NoNVoJCf"></img>
+              <span id="team-seed-b-player-2-name" class="player-name"></span>
+            </div>
+          </div>
+        </div>
+        <div id="team-seed-c" class="team-seed">
+          <div id="team-seed-c-players" class="team-seed-players">
+            <div class="player-seed">
+              <img id="team-seed-c-player-1-pfp" class="player-pfp" src="https://lous.s-ul.eu/NoNVoJCf"></img>
+              <span id="team-seed-c-player-1-name" class="player-name"></span>
+            </div>
+            <div class="player-seed">
+              <img id="team-seed-c-player-2-pfp" class="player-pfp" src="https://lous.s-ul.eu/NoNVoJCf"></img>
+              <span id="team-seed-c-player-2-name" class="player-name"></span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  </div>
+  <img id="team-seed-a-bg" class="team-seed-bg" src="../../../_shared_assets/design/draft_seed_a.png">
+  <img id="team-seed-b-bg" class="team-seed-bg" src="../../../_shared_assets/design/draft_seed_b.png">
+  <img id="team-seed-c-bg" class="team-seed-bg" src="../../../_shared_assets/design/draft_seed_c.png">
+  <img id="spinner-bg" src="../../../_shared_assets/design/draft_spinner_bg.png">
+  <img id="bg" src="../../../_shared_assets/design/draft_bg.png">
+  <!-- <video autoplay muted loop>
+        <source src="../../_shared_assets/design/timer.mp4" type="video/mp4">
+        Your browser does not support the video tag.
+      </video> -->
+  </div>
+  <div class="control-panel">
+    <button id="csvUploadButton">Link Seed Data</button>
+    <input type="file" id="csvFileInput" accept=".csv" style="display:none">
+    <button id="spinButton" onclick="spinDraft()">Spin</button>
+    <button id="confirmButton" onclick="confirmPlayer()">Confirm Player</button>
+    <button id="nextTeamButton" onclick="nextTeam()">Next Team</button>
+    <button id="prevTeamButton" onclick="prevTeam()">Previous Team</button>
+    <button id="nextSeedButton" onclick="nextSeed()">Next Seed</button>
+    <button id="prevSeedButton" onclick="prevSeed()">Previous Seed</button>
+    <button id="intermediaryStopButton">Stop Idle Spin</button>
+  </div>
+  </div>
+  <script src="index.js"></script>
+</body>
+
+</html>

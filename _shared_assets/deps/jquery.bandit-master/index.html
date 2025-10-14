@@ -1,0 +1,138 @@
+<!doctype html>
+<html>
+	<head>
+		<title>Bandit Demo</title>
+
+		<style>
+			#container {
+				position: relative;
+				overflow: hidden;
+				border-top: 1px solid #999;
+				border-bottom: 1px solid #999;
+				margin: 20px 0 0 0;
+			}
+
+			ul {
+				position: relative;
+				float: left;
+				list-style: none;
+				padding: 0;
+				margin: 0;	
+				width: 50%;
+				font-size: 50px;
+				height: 185px;
+			}
+			ul li {
+				margin: 0 20px;
+				line-height: 65px;
+			}
+
+			#first li {
+				border-right: 1px solid #ccc;	
+			}
+			#second {
+				float: left;
+			}
+
+			button {
+				display: block;
+				font-size: 21px;
+				margin: 20px auto 0 auto;
+				float: left;
+				margin-right: 20px;
+			}
+
+		</style>
+	</head>
+	<body>
+		<h1>Your band's name is...</h1>
+
+		<div id="container">
+			<ul id="first">
+				<li>The Boiled</li>
+				<li>The Insane</li>
+				<li>The Disgusting</li>
+			</ul>
+
+			<ul id="second">
+				<li>Animals</li>
+				<li>Judgements</li>
+				<li>Frogs</li>
+				<!-- <li>Ladies</li>
+				<li>Dudes</li>
+				<li>Planets</li>
+				<li>Roadkill</li>
+				<li>Bananas</li>
+				<li>Diapers</li>
+				<li>Scorpions</li>
+				<li>Gorillas</li>
+				<li>Days</li>
+				<li>Monkeys</li>
+				<li>Narcissists</li>
+				<li>Environment</li>
+				<li>Wounds</li>
+				<li>Vacuum</li>
+				<li>Hypnotists</li>
+				<li>Scorpions</li>
+				<li>Motivation</li> -->
+			</ul>
+		</div>
+		<div id="buttons">
+			<button id="start">Spin!</button>
+			<button id="stop">Stop</button>
+		</div>
+		<h2 id="result" style="text-align:center; margin-top:10px;"></h2>
+	</body>
+
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/2.0.0/jquery.min.js"></script>
+<script src="../jquery.bandit.js"></script>
+<script>
+$(function() {
+  var $uls = $('ul');
+  var total = $uls.length;
+  var results = new Array(total);
+  var finishedCount = 0;
+
+  $uls.each(function(index) {
+    var $thisUl = $(this);
+
+    // 1️⃣ Duplicate list items so there are enough for display
+    var $items = $thisUl.children();
+    var uniqueCount = $items.length;
+    var visibleCount = 10;
+    var repeatCount = Math.ceil((visibleCount * 2) / uniqueCount);
+
+    for (let i = 0; i < repeatCount - 1; i++) {
+      $thisUl.append($items.clone());
+    }
+
+    // 2️⃣ Initialize Bandit after duplication
+    $thisUl.bandit({
+      speed: [20, 40],
+      delay: 0,
+      autoStop: [2000, 4000],
+      spinButton: '#start',
+      stopButton: '#stop',
+      spinOnLoad: true,
+
+      done: function(finalHtml) {
+        // 3️⃣ Convert back to logical "unique" result
+        // Find the original item text it corresponds to
+        var text = $('<div>').html(finalHtml).text().trim();
+
+        results[index] = text;
+        finishedCount++;
+
+        if (finishedCount === total) {
+          $('#result').text("🎸 Your band's name is: " + results.join(' '));
+          finishedCount = 0;
+          results = new Array(total);
+        }
+      }
+    });
+  });
+});
+
+</script>
+</html>
+

@@ -1,0 +1,406 @@
+@font-face {
+    font-family: "Bell-MT";
+    src: url("../../_shared_assets/fonts/Bell\ MT\ Regular.otf");
+}
+
+@font-face {
+    font-family: "Calloveya";
+    src: url("../../_shared_assets/fonts/Calloveya.ttf");
+}
+
+@font-face {
+    font-family: "Callheart";
+    src: url("../../_shared_assets/fonts/Callheart.ttf");
+}
+
+
+* {
+    box-sizing: border-box;
+}
+
+body,
+html {
+    margin: 0;
+    padding: 0;
+    /* background: #000; */
+    font-family: "Bell-MT";
+    overflow-x: auto;
+}
+
+.wrapper {
+    display: flex;
+    flex-direction: row;
+    width: 2220px;
+    /* 1920 + 300 control panel */
+    height: 1080px;
+    position: relative;
+    z-index: 1;
+}
+
+.video-area {
+    position: relative;
+    width: 1920px;
+    height: 1080px;
+    flex-shrink: 0;
+}
+
+.video-area video {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+#fg {
+    position: absolute;
+    width: 1920px;
+    height: 1080px;
+    z-index: 2;
+}
+
+#bg {
+    position: absolute;
+    width: 1920px;
+    height: 1080px;
+    top: 0px;
+    left: 0px;
+    z-index: -1;
+}
+
+.timer {
+    font-family: "Bell-MT";
+    position: absolute;
+    /* transform: translateX(-50%); */
+    width: 1920px;
+    height: 1080px;
+    left: 40px;
+    display: flex;
+    z-index: 3;
+    justify-content: start;
+    align-items: start;
+    font-size: 100px;
+    color: #5f3a39;
+}
+
+.startingText {
+    font-family: "Bell-MT";
+    position: absolute;
+    /* transform: translateX(-50%); */
+    width: 1920px;
+    height: 1080px;
+    top: 120px;
+    display: flex;
+    z-index: 3;
+    justify-content: center;
+    align-items: center;
+    font-size: 24px;
+    color: white;
+}
+
+#spinner {
+    font-family: "Bell-MT";
+    position: absolute;
+    /* transform: translateX(-50%); */
+    width: 610px;
+    height: 1080px;
+    right: 0px;
+    display: flex;
+    z-index: 3;
+    justify-content: start;
+    align-items: center;
+}
+
+#spinner-text {
+    position:absolute;
+    bottom:-100px;
+    left:-35px;
+    display:flex;
+    z-index: 3;
+    transform: scaleX(0.9);
+}
+
+#spinner-text-front {
+    font-size: 165px;
+    color: #facc5b;
+    font-style: italic;
+}
+
+#spinner-text-back {
+    position:relative;
+    bottom:20px;
+    left:10px;
+    font-size: 231px;
+    color: #facc5b;
+    font-family: "Callheart";
+    font-style: italic;
+}
+
+#spinner-opacity-overlay {
+    position: absolute;
+    width: 610px;
+    height: 880px;
+    left: 0;
+    top: 100px;
+    /* for Firefox and modern browsers */
+    -webkit-mask-image: linear-gradient(to bottom,
+            rgba(0, 0, 0, 1) 0%,
+            rgba(0, 0, 0, 0) 50%,
+            rgba(0, 0, 0, 1) 100%);
+    -webkit-mask-mode: alpha;
+    -webkit-mask-repeat: no-repeat;
+    mask-image: linear-gradient(to bottom,
+            rgba(0, 0, 0, 1) 0%,
+            rgba(0, 0, 0, 0) 50%,
+            rgba(0, 0, 0, 1) 100%);
+    mask-mode: alpha;
+    mask-repeat: no-repeat;
+    z-index: 2;
+}
+
+.spinner-content {
+    position:absolute !important;
+    top:100px;
+    /* hide anything outside the list bounds */
+    overflow: hidden;
+    height: 880px;
+    display: flex;
+    flex-direction: column;
+    align-items: start;
+    justify-content: center;
+    -webkit-mask-image: linear-gradient(to bottom,
+            transparent 0%,
+            black 40%,
+            black 60%,
+            transparent 100%);
+    -webkit-mask-mode: alpha;
+    mask-image: linear-gradient(to bottom,
+            transparent 0%,
+            black 40%,
+            black 60%,
+            transparent 100%);
+    mask-mode: alpha;
+}
+
+.player-list {
+    /* center list items */
+    display: flex;
+    flex-direction: column;
+    align-items: start;
+    justify-content: center;
+    list-style: none;
+    position: relative;
+    height:fit-content;
+    /* lets bandit animate ‘top’ on the UL */
+    top: 0;
+}
+
+#spinner-content-seed-b, #spinner-content-seed-c {
+    opacity:0;
+}
+
+.player {
+    display: flex;
+    align-items: center;
+    transform: translateY(6px);
+    height: 96px;
+}
+
+.player-seed {
+    display: flex;
+    align-items: center;
+}
+
+.player-pfp {
+    width: 60px;
+    height: 60px;
+    object-fit: contain;
+    border-radius: 10px;
+    border: 5px solid #facc5b;
+    box-shadow: 4px 4px 0 #facc5b;
+}
+
+.player-name {
+    margin-left: 20px;
+    font-style: italic;
+    font-size: 48px;
+    color: #facc5b;
+}
+
+#spinner-bg {
+    position: absolute;
+    /* transform: translateX(-50%); */
+    width: 1920px;
+    height: 1080px;
+    top: 0px;
+    left: 0px;
+    z-index: 0;
+}
+
+.control-panel {
+    position: absolute;
+    top: 0;
+    left: 1920px;
+    height: 1080px;
+    width: 300px;
+    background: #1a1a1a;
+    color: white;
+    padding: 30px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 20px;
+    flex-shrink: 0;
+    font-family: "Bell-MT";
+    z-index:99 !important
+}
+
+.control-panel button {
+    width: 100%;
+    padding: 15px;
+    font-size: 30px;
+    cursor: pointer;
+    background: #333;
+    border: none;
+    color: white;
+    border-radius: 8px;
+    transition: background 0.3s;
+    font-family: "Bell-MT";
+    font-weight: 700;
+}
+
+.control-panel button:hover {
+    background: #555;
+}
+
+#team {
+    display: flex;
+    flex-direction: column;
+    position: absolute;
+    top: 306px;
+    left: 228px;
+}
+
+#team-text {
+    position: absolute;
+    top: -125px;
+    display: flex;
+    width: 500px;
+    align-items: center;
+    z-index: 1;
+}
+
+#team-text-front {
+    font-size: 104px;
+    color: #d74430;
+    z-index: 3;
+    font-style: italic;
+}
+
+#team-text-back {
+    font-size: 269px;
+    color: #f28574;
+    position: absolute;
+    font-family: "Calloveya";
+    font-style: italic;
+    top: -60px;
+    left: 200px;
+    z-index: index 1 !important;
+}
+
+.team-seed {
+    height: 164px;
+    margin-bottom: 45px;
+    display: flex;
+    align-items: center;
+    z-index: 3;
+}
+
+.team-seed-bg {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 1920px;
+    height: 1080px;
+    z-index: 0 !important;
+}
+
+.team-seed-players {
+    display: flex;
+    flex-direction: column;
+    align-items: start;
+    width:500px;
+    height: inherit;
+    justify-content: space-around;
+    transform: scale(0.9);
+}
+
+#draftTransition {
+    position: absolute;
+    width: 610px;
+    height: 1080px;
+    top: 0;
+    right: 0;
+    z-index: 5;
+    object-fit: cover;
+}
+
+@keyframes bobAnimate {
+    0% {
+        transform: scale(1);
+    }
+    50% {
+        transform: scale(0.9);
+    }
+    100% {
+        transform: scale(1);
+    }
+}
+
+@keyframes bobAnimateSpinner {
+    0% {
+        transform: scale(1), translateY(6px);
+    }
+    50% {
+        transform: scale(0.9), translateY(6px);
+    }
+    100% {
+        transform: scale(1), translateY(6px);
+    }
+}
+
+@keyframes buttonGlow {
+    0% {
+        background: #333;
+    }
+    20% {
+        background: #c5c5c5;
+    }
+    40% {
+        background: #c5c5c5;
+    }
+    100% {
+        background: #333;
+    }
+}
+
+@keyframes fadeOutTeam {
+    0% {
+        transform: translateX(0px);
+        opacity: 1;
+    }
+    100% {
+        transform: translateX(300px);
+        opacity: 0;
+    }
+}
+
+@keyframes fadeInTeam {
+    0% {
+        transform: translateX(-300px);
+        opacity: 0;
+    }
+    100% {
+        transform: translateX(0px);
+        opacity: 1;
+    }
+}
