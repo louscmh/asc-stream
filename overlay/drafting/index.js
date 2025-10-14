@@ -202,7 +202,7 @@ function spinDraft() {
 
 function buildSpinner($ul, seed) {
   const seedMap = spinnerPlayers.get(seed) || new Map();
-  const visibleCount = 9;
+  const visibleCount = 11;
   let totalItem = seedMap.size;
 
   // clear existing items
@@ -246,34 +246,38 @@ function buildSpinner($ul, seed) {
 }
 
 function confirmPlayer() {
-  if (!spinned) return;
+  if (!spinned || !recentPlayer) {
+    buttonGlow(document.getElementById('spinButton'));
+    return
+  };
   document.getElementById('transitionStinger').play();
+
+  // update the UI
+  const playersContainer = document.getElementById(
+    `team-seed-${currentSeed.toLowerCase()}-players`
+  );
+  const slots = playersContainer.querySelectorAll('.player-seed');
+  const hasEmptySlot = Array.from(slots).some(slot => {
+    const imgEl = slot.querySelector('img.player-pfp');
+    const nameEl = slot.querySelector('span.player-name');
+    return !imgEl.getAttribute('src') || !nameEl.textContent.trim();
+  });
+  if (!hasEmptySlot) {
+    if (currentTeam < 16) {
+      buttonGlow(document.getElementById('nextTeamButton'));
+    } else if (currentSeed < 'C') {
+      buttonGlow(document.getElementById('nextSeedButton'));
+    }
+  } else {
+    buttonGlow(document.getElementById('spinButton'));
+  };
+
   setTimeout(() => {
     // remove from our in-memory map
     const seed = currentSeed;
     spinnerPlayers.get(seed).delete(recentPlayer.username);
     teams.get(currentTeam).players.push(recentPlayer);
     console.log(teams);
-
-    // update the UI
-    const playersContainer = document.getElementById(
-      `team-seed-${currentSeed.toLowerCase()}-players`
-    );
-    const slots = playersContainer.querySelectorAll('.player-seed');
-    const hasEmptySlot = Array.from(slots).some(slot => {
-      const imgEl = slot.querySelector('img.player-pfp');
-      const nameEl = slot.querySelector('span.player-name');
-      return !imgEl.getAttribute('src') || !nameEl.textContent.trim();
-    });
-    if (!hasEmptySlot) {
-      if (currentTeam < 16) {
-        buttonGlow(document.getElementById('nextTeamButton'));
-      } else if (currentSeed < 'C') {
-        buttonGlow(document.getElementById('nextSeedButton'));
-      }
-    } else {
-      buttonGlow(document.getElementById('spinButton'));
-    };
 
     const $ul = $(`#player-list-seed-${currentSeed.toLowerCase()}`);
     buildSpinner($ul, seed);
@@ -287,19 +291,29 @@ function nextTeam() {
     buttonGlow(document.getElementById('confirmButton'));
     return;
   }
+  promptTeamTransition()
   if (currentTeam < 16) {
     currentTeam++;
-    promptTeamTransition();
-    setTimeout(() => {
-      buildTeamDisplay();
-    }, 1300);
   } else {
     currentTeam = 1;
-    promptTeamTransition();
-    setTimeout(() => {
-      buildTeamDisplay();
-    }, 1300);
   }
+  setTimeout(() => {
+    buildTeamDisplay();
+    const playersContainer = document.getElementById(
+      `team-seed-${currentSeed.toLowerCase()}-players`
+    );
+    const slots = playersContainer.querySelectorAll('.player-seed');
+    const hasEmptySlot = Array.from(slots).some(slot => {
+      const imgEl = slot.querySelector('img.player-pfp');
+      const nameEl = slot.querySelector('span.player-name');
+      return !imgEl.getAttribute('src') || !nameEl.textContent.trim();
+    });
+    if (!hasEmptySlot) {
+      currentTeam == 16 ? buttonGlow(document.getElementById('nextSeedButton')) : buttonGlow(document.getElementById('nextTeamButton'));
+    } else {
+      buttonGlow(document.getElementById('spinButton'));
+    };
+  }, 1300);
 }
 
 function prevTeam() {
@@ -307,67 +321,111 @@ function prevTeam() {
     buttonGlow(document.getElementById('confirmButton'));
     return;
   }
+  promptTeamTransition();
   if (currentTeam > 1) {
     currentTeam--;
-    promptTeamTransition();
-    setTimeout(() => {
-      buildTeamDisplay();
-    }, 1300);
   } else {
     currentTeam = 16;
-    promptTeamTransition();
-    setTimeout(() => {
-      buildTeamDisplay();
-    }, 1300);
   }
+  setTimeout(() => {
+    buildTeamDisplay();
+    const playersContainer = document.getElementById(
+      `team-seed-${currentSeed.toLowerCase()}-players`
+    );
+    const slots = playersContainer.querySelectorAll('.player-seed');
+    const hasEmptySlot = Array.from(slots).some(slot => {
+      const imgEl = slot.querySelector('img.player-pfp');
+      const nameEl = slot.querySelector('span.player-name');
+      return !imgEl.getAttribute('src') || !nameEl.textContent.trim();
+    });
+    if (!hasEmptySlot) {
+      currentTeam == 16 ? buttonGlow(document.getElementById('nextSeedButton')) : buttonGlow(document.getElementById('nextTeamButton'));
+    } else {
+      buttonGlow(document.getElementById('spinButton'));
+    };
+  }, 1300);
 }
 
 function nextSeed() {
+  if (spinnerPlayers.size === 0) {
+    buttonGlow(document.getElementById('csvUploadButton'));
+    console.log("No players loaded, upload CSV first");
+    return;
+  }
   if (spinned) {
     buttonGlow(document.getElementById('confirmButton'));
     return;
   }
+  document.getElementById('transitionStinger').play();
   if (currentSeed < 'C') {
-    document.getElementById('transitionStinger').play();
     setTimeout(() => {
       currentSeed = String.fromCharCode(currentSeed.charCodeAt(0) + 1)
-      updateSeedVisibility()
-      const $ul = $(`#player-list-seed-${currentSeed.toLowerCase()}`);
-      buildSpinner($ul, currentSeed);
     }, 500);
   } else {
-    document.getElementById('transitionStinger').play();
     setTimeout(() => {
       currentSeed = 'A';
-      updateSeedVisibility()
-      const $ul = $(`#player-list-seed-${currentSeed.toLowerCase()}`);
-      buildSpinner($ul, currentSeed);
     }, 500);
   }
+  setTimeout(() => {
+    updateSeedVisibility()
+    const $ul = $(`#player-list-seed-${currentSeed.toLowerCase()}`);
+    const playersContainer = document.getElementById(
+      `team-seed-${currentSeed.toLowerCase()}-players`
+    );
+    const slots = playersContainer.querySelectorAll('.player-seed');
+    const hasEmptySlot = Array.from(slots).some(slot => {
+      const imgEl = slot.querySelector('img.player-pfp');
+      const nameEl = slot.querySelector('span.player-name');
+      return !imgEl.getAttribute('src') || !nameEl.textContent.trim();
+    });
+    if (!hasEmptySlot) {
+      buttonGlow(document.getElementById('nextTeamButton'));
+    } else {
+      buttonGlow(document.getElementById('spinButton'));
+    };
+    buildSpinner($ul, currentSeed);
+  }, 500);
 }
 
 function prevSeed() {
+  if (spinnerPlayers.size === 0) {
+    buttonGlow(document.getElementById('csvUploadButton'));
+    console.log("No players loaded, upload CSV first");
+    return;
+  }
   if (spinned) {
     buttonGlow(document.getElementById('confirmButton'));
     return;
   }
+  document.getElementById('transitionStinger').play();
   if (currentSeed > 'A') {
-    document.getElementById('transitionStinger').play();
     setTimeout(() => {
       currentSeed = String.fromCharCode(currentSeed.charCodeAt(0) - 1)
-      updateSeedVisibility()
-      const $ul = $(`#player-list-seed-${currentSeed.toLowerCase()}`);
-      buildSpinner($ul, currentSeed);
     }, 500);
   } else {
-    document.getElementById('transitionStinger').play();
     setTimeout(() => {
       currentSeed = 'C';
-      updateSeedVisibility()
-      const $ul = $(`#player-list-seed-${currentSeed.toLowerCase()}`);
-      buildSpinner($ul, currentSeed);
     }, 500);
   }
+  setTimeout(() => {
+    updateSeedVisibility()
+    const $ul = $(`#player-list-seed-${currentSeed.toLowerCase()}`);
+    const playersContainer = document.getElementById(
+      `team-seed-${currentSeed.toLowerCase()}-players`
+    );
+    const slots = playersContainer.querySelectorAll('.player-seed');
+    const hasEmptySlot = Array.from(slots).some(slot => {
+      const imgEl = slot.querySelector('img.player-pfp');
+      const nameEl = slot.querySelector('span.player-name');
+      return !imgEl.getAttribute('src') || !nameEl.textContent.trim();
+    });
+    if (!hasEmptySlot) {
+      buttonGlow(document.getElementById('nextTeamButton'));
+    } else {
+      buttonGlow(document.getElementById('spinButton'));
+    };
+    buildSpinner($ul, currentSeed);
+  }, 500);
 }
 
 function updateSeedVisibility() {
@@ -478,14 +536,14 @@ function applyBob(object, isSpinner = false) {
   object.style.animation = isSpinner ? "bobAnimateSpinner 1.5s cubic-bezier(0,.7,.39,.99)" : "bobAnimate 1s cubic-bezier(0,.7,.39,.99)";
   setInterval(() => {
     object.style.animation = "none";
-  }, 1000);
+  }, 1500);
 }
 
 function buttonGlow(button) {
-  button.style.animation = "buttonGlow 1.5s ease-in-out";
+  button.style.animation = "buttonGlow 2.5s ease-in-out";
   setInterval(() => {
     button.style.animation = "none";
-  }, 1000);
+  }, 5000);
 }
 
 function promptTeamTransition() {
@@ -551,3 +609,5 @@ function promptTeamTransition() {
     }, 300);
   }, 1400);
 }
+
+buttonGlow(document.getElementById('csvUploadButton'));

@@ -372,10 +372,13 @@ html {
     0% {
         background: #333;
     }
-    20% {
+    25% {
         background: #c5c5c5;
     }
-    40% {
+    50% {
+        background: #333;
+    }
+    75% {
         background: #c5c5c5;
     }
     100% {
