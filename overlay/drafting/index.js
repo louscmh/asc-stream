@@ -51,13 +51,35 @@ class Player {
     document.getElementById(this.player.id).appendChild(this.playerPfp);
     document.getElementById(this.player.id).appendChild(this.playerName);
   }
+  generateDisplayItem() {
+    let seedingContainer = document.getElementById(
+      (`seeding-container-seed-${this.seed}`).toLowerCase()
+    );
+
+    this.playerSeed = document.createElement('div');
+    this.playerSeed.id = `seed-${this.user_id}-${this.seed}`;
+    this.playerSeed.className = 'player-seed-container';
+    this.playerSeedPfp = document.createElement('img');
+    this.playerSeedPfp.id = `seed-pfp-${this.user_id}-${this.seed}`;
+    this.playerSeedPfp.className = 'seed-pfp-container';
+    this.playerSeedPfp.src = this.pfp;
+    this.playerSeedPfpName = document.createElement('span');
+    this.playerSeedPfpName.id = `seed-name-${this.user_id}-${this.seed}`;
+    this.playerSeedPfpName.className = 'seed-name-container';
+    this.playerSeedPfpName.textContent = this.username;
+
+    seedingContainer.appendChild(this.playerSeed);
+    document.getElementById(this.playerSeed.id).appendChild(this.playerSeedPfp);
+    document.getElementById(this.playerSeed.id).appendChild(this.playerSeedPfpName);
+  }
 }
 
 // VARIABLES /////////////////////////////////////////////////////////////
 let currentTeam = 1;
-let currentSeed = 'A';
+let currentSeed = 'C';
 let spinned = false;
 let recentPlayer;
+let fadeIn = true;
 const spinnerPlayers = new Map();
 const teams = new Map()
 for (let i = 1; i <= 16; i++) {
@@ -123,9 +145,9 @@ async function processCSV(csvText) {
     });
   });
   console.log(spinnerPlayers);
-  const $ul = $(`#player-list-seed-a`);
-  buildSpinner($ul, 'A');
-  buttonGlow(document.getElementById('spinButton'));
+  const $ul = $(`#player-list-seed-c`);
+  buildSpinner($ul, 'C');
+  buttonGlow(document.getElementById('promptSeedButton'));
 }
 
 function spinDraft() {
@@ -215,6 +237,7 @@ function buildSpinner($ul, seed) {
   // build items from spinnerPlayers
   seedMap.forEach(player => {
     player.generateSpinnerItem();
+    player.generateDisplayItem();
   });
 
   // duplicate items until we reach the visibleCount
@@ -352,45 +375,8 @@ function nextSeed() {
     console.log("No players loaded, upload CSV first");
     return;
   }
-  if (spinned) {
-    buttonGlow(document.getElementById('confirmButton'));
-    return;
-  }
-  document.getElementById('transitionStinger').play();
-  if (currentSeed < 'C') {
-    setTimeout(() => {
-      currentSeed = String.fromCharCode(currentSeed.charCodeAt(0) + 1)
-    }, 500);
-  } else {
-    setTimeout(() => {
-      currentSeed = 'A';
-    }, 500);
-  }
-  setTimeout(() => {
-    updateSeedVisibility()
-    const $ul = $(`#player-list-seed-${currentSeed.toLowerCase()}`);
-    const playersContainer = document.getElementById(
-      `team-seed-${currentSeed.toLowerCase()}-players`
-    );
-    const slots = playersContainer.querySelectorAll('.player-seed');
-    const hasEmptySlot = Array.from(slots).some(slot => {
-      const imgEl = slot.querySelector('img.player-pfp');
-      const nameEl = slot.querySelector('span.player-name');
-      return !imgEl.getAttribute('src') || !nameEl.textContent.trim();
-    });
-    if (!hasEmptySlot) {
-      buttonGlow(document.getElementById('nextTeamButton'));
-    } else {
-      buttonGlow(document.getElementById('spinButton'));
-    };
-    buildSpinner($ul, currentSeed);
-  }, 500);
-}
-
-function prevSeed() {
-  if (spinnerPlayers.size === 0) {
-    buttonGlow(document.getElementById('csvUploadButton'));
-    console.log("No players loaded, upload CSV first");
+  if (!fadeIn) {
+    buttonGlow(document.getElementById('promptSeedButton'));
     return;
   }
   if (spinned) {
@@ -422,7 +408,52 @@ function prevSeed() {
     if (!hasEmptySlot) {
       buttonGlow(document.getElementById('nextTeamButton'));
     } else {
-      buttonGlow(document.getElementById('spinButton'));
+      buttonGlow(document.getElementById('promptSeedButton'));
+    };
+    buildSpinner($ul, currentSeed);
+  }, 500);
+}
+
+function prevSeed() {
+  if (spinnerPlayers.size === 0) {
+    buttonGlow(document.getElementById('csvUploadButton'));
+    console.log("No players loaded, upload CSV first");
+    return;
+  }
+  if (!fadeIn) {
+    buttonGlow(document.getElementById('promptSeedButton'));
+    return;
+  }
+  if (spinned) {
+    buttonGlow(document.getElementById('confirmButton'));
+    return;
+  }
+  document.getElementById('transitionStinger').play();
+  if (currentSeed < 'C') {
+    setTimeout(() => {
+      currentSeed = String.fromCharCode(currentSeed.charCodeAt(0) + 1)
+    }, 500);
+  } else {
+    setTimeout(() => {
+      currentSeed = 'A';
+    }, 500);
+  }
+  setTimeout(() => {
+    updateSeedVisibility()
+    const $ul = $(`#player-list-seed-${currentSeed.toLowerCase()}`);
+    const playersContainer = document.getElementById(
+      `team-seed-${currentSeed.toLowerCase()}-players`
+    );
+    const slots = playersContainer.querySelectorAll('.player-seed');
+    const hasEmptySlot = Array.from(slots).some(slot => {
+      const imgEl = slot.querySelector('img.player-pfp');
+      const nameEl = slot.querySelector('span.player-name');
+      return !imgEl.getAttribute('src') || !nameEl.textContent.trim();
+    });
+    if (!hasEmptySlot) {
+      buttonGlow(document.getElementById('nextTeamButton'));
+    } else {
+      buttonGlow(document.getElementById('promptSeedButton'));
     };
     buildSpinner($ul, currentSeed);
   }, 500);
@@ -512,26 +543,6 @@ function displayGrouped(grouped) {
   });
 }
 
-function formatTime(seconds) {
-  let min = Math.floor(seconds / 60);
-  let sec = seconds % 60;
-  return `${min.toString().padStart(2, '0')}:${sec.toString().padStart(2, '0')}`;
-}
-
-function updateDisplay() {
-  timerDisplay.textContent = formatTime(duration);
-}
-
-function startCountdown() {
-  clearInterval(countdownInterval);
-  countdownInterval = setInterval(() => {
-    if (duration > 0) {
-      duration--;
-      updateDisplay();
-    }
-  }, 1000);
-}
-
 function applyBob(object, isSpinner = false) {
   object.style.animation = isSpinner ? "bobAnimateSpinner 1.5s cubic-bezier(0,.7,.39,.99)" : "bobAnimate 1s cubic-bezier(0,.7,.39,.99)";
   setInterval(() => {
@@ -539,14 +550,15 @@ function applyBob(object, isSpinner = false) {
   }, 1500);
 }
 
-function buttonGlow(button) {
+async function buttonGlow(button) {
   button.style.animation = "buttonGlow 2.5s ease-in-out";
   setInterval(() => {
     button.style.animation = "none";
-  }, 5000);
+  }, 3000);
 }
 
 function promptTeamTransition() {
+
   const teamTextFront = document.getElementById('team-text-front');
   const teamTextBack = document.getElementById('team-text-back');
   const teamSeedA = document.getElementById('team-seed-a');
@@ -608,6 +620,125 @@ function promptTeamTransition() {
       teamSeedCBG.style.opacity = '1';
     }, 300);
   }, 1400);
+}
+
+function promptSeedDisplay() {
+  if (spinnerPlayers.size === 0) {
+    buttonGlow(document.getElementById('csvUploadButton'));
+    console.log("No players loaded, upload CSV first");
+    return;
+  }
+
+  const teamTextFront = document.getElementById('team-text-front');
+  const teamTextBack = document.getElementById('team-text-back');
+  const teamSeedA = document.getElementById('team-seed-a');
+  const teamSeedABG = document.getElementById('team-seed-a-bg');
+  const teamSeedB = document.getElementById('team-seed-b');
+  const teamSeedBBG = document.getElementById('team-seed-b-bg');
+  const teamSeedC = document.getElementById('team-seed-c');
+  const teamSeedCBG = document.getElementById('team-seed-c-bg');
+  const spinner = document.getElementById('spinner');
+  const spinnerBG = document.getElementById('spinner-bg');
+  const seedingTextFront = document.getElementById('seeding-text-front');
+  const seedingTextBack = document.getElementById('seeding-text-back');
+  const seedingContainer = document.getElementById('seeding-container');
+  const seedingContainerContent = document.getElementById(`seeding-container-seed-${currentSeed.toLowerCase()}`);
+
+  seedingTextFront.innerHTML = `Seed ${currentSeed}`;
+
+  const animOut = "fadeOutSeed 1s cubic-bezier(.45,0,1,.48)";
+  const animIn = "fadeInTeam 1s cubic-bezier(0.000, 0.125, 0.000, 1.005)";
+  const animOutTeam = "fadeOutTeam 1s cubic-bezier(.45,0,1,.48)";
+  const animOutSpinner = "fadeOutSpinner 1s cubic-bezier(.45,0,1,.48)";
+  const animInSpinner = "fadeInSpinner 1s cubic-bezier(0.000, 0.125, 0.000, 1.005)";
+  const animOutDisplaySeed = "fadeOutDisplaySeed 1s cubic-bezier(.45,0,1,.48)";
+  const animInDisplaySeed = "fadeInDisplaySeed 1s cubic-bezier(0.000, 0.125, 0.000, 1.005)";
+
+  if (fadeIn) {
+    teamTextFront.style.animation = animOut;
+    spinner.style.animation = animOutSpinner;
+    spinnerBG.style.animation = animOutSpinner;
+    setTimeout(() => { teamTextBack.style.animation = animOut; }, 50);
+    setTimeout(() => {
+      teamSeedA.style.animation = animOut;
+      teamSeedABG.style.animation = animOut;
+    }, 100);
+    setTimeout(() => {
+      teamSeedB.style.animation = animOut;
+      teamSeedBBG.style.animation = animOut;
+    }, 200);
+    setTimeout(() => {
+      teamSeedC.style.animation = animOut;
+      teamSeedCBG.style.animation = animOut;
+      teamTextFront.style.opacity = '0';
+      teamTextBack.style.opacity = '0';
+      teamSeedA.style.opacity = '0';
+      teamSeedABG.style.opacity = '0';
+      teamSeedB.style.opacity = '0';
+      teamSeedBBG.style.opacity = '0';
+      teamSeedC.style.opacity = '0';
+      teamSeedCBG.style.opacity = '0';
+      spinner.style.opacity = '0';
+      spinnerBG.style.opacity = '0';
+    }, 300);
+    setTimeout(() => {
+      seedingContainer.style.animation = animIn;
+      seedingContainer.style.opacity = '1';
+      seedingTextFront.style.animation = animInDisplaySeed;
+      seedingTextFront.style.opacity = '1';
+    }, 1300);
+    setTimeout(() => {
+      seedingContainerContent.style.animation = animIn;
+      seedingContainerContent.style.opacity = '1';
+      seedingTextBack.style.animation = animInDisplaySeed;
+      seedingTextBack.style.opacity = '1';
+      buttonGlow(document.getElementById('promptSeedButton'));
+    }, 1400);
+  } else {
+    seedingContainerContent.style.animation = animOutTeam;
+    seedingContainerContent.style.opacity = '0';
+    seedingTextBack.style.animation = animOutDisplaySeed;
+    seedingTextBack.style.opacity = '0';
+
+    setTimeout(() => {
+      seedingContainer.style.animation = animOutTeam;
+      seedingContainer.style.opacity = '0';
+      seedingTextFront.style.animation = animOutDisplaySeed;
+      seedingTextFront.style.opacity = '0';
+    }, 100);
+
+    setTimeout(() => {
+      teamTextFront.style.animation = animIn;
+      spinner.style.animation = animInSpinner;
+      spinnerBG.style.animation = animInSpinner;
+    }, 1100);
+    setTimeout(() => { teamTextBack.style.animation = animIn; }, 1150);
+    setTimeout(() => {
+      teamSeedA.style.animation = animIn;
+      teamSeedABG.style.animation = animIn;
+    }, 1200);
+    setTimeout(() => {
+      teamSeedB.style.animation = animIn;
+      teamSeedBBG.style.animation = animIn;
+    }, 1300);
+    setTimeout(() => {
+      teamSeedC.style.animation = animIn;
+      teamSeedCBG.style.animation = animIn;
+      teamTextFront.style.opacity = '1';
+      teamTextBack.style.opacity = '1';
+      teamSeedA.style.opacity = '1';
+      teamSeedABG.style.opacity = '1';
+      teamSeedB.style.opacity = '1';
+      teamSeedBBG.style.opacity = '1';
+      teamSeedC.style.opacity = '1';
+      teamSeedCBG.style.opacity = '1';
+      spinner.style.opacity = '1';
+      spinnerBG.style.opacity = '1';
+      buttonGlow(document.getElementById('spinButton'));
+    }, 1400);
+  }
+
+  fadeIn = !fadeIn;
 }
 
 buttonGlow(document.getElementById('csvUploadButton'));
