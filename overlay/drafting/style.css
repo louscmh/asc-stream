@@ -134,6 +134,12 @@ html {
     font-style: italic;
 }
 
+.spinner-text-adjustment {
+    bottom: 27px !important;
+    left: 13px;
+    font-size: 231px !important;
+}
+
 #spinner-opacity-overlay {
     position: absolute;
     width: 610px;

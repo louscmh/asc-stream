@@ -471,6 +471,11 @@ function updateSeedVisibility() {
   const spinnerText = document.getElementById('spinner-text-back')
   if (spinnerText) {
     spinnerText.textContent = currentSeed
+    if (currentSeed === 'C') {
+      spinnerText.classList.remove('spinner-text-adjustment');
+    } else {
+      spinnerText.classList.add('spinner-text-adjustment');
+    }
   }
 }
 
