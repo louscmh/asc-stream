@@ -1,0 +1,160 @@
+@font-face {
+    font-family: "Bell-MT";
+    src: url("../../_shared_assets/fonts/Bell\ MT\ Regular.otf");
+}
+
+@font-face {
+    font-family: "Calloveya";
+    src: url("../../_shared_assets/fonts/Calloveya.ttf");
+}
+
+@font-face {
+    font-family: "Callheart";
+    src: url("../../_shared_assets/fonts/Callheart.ttf");
+}
+
+@font-face {
+    font-family: "Georgia";
+    src: url("../../_shared_assets/fonts/georgia.ttf");
+}
+
+@font-face {
+    font-family: "Georgia-Bold";
+    src: url("../../_shared_assets/fonts/georgiab.ttf");
+}
+
+
+* {
+    box-sizing: border-box;
+}
+
+body,
+html {
+    margin: 0;
+    padding: 0;
+    background: #000;
+    font-family: "Bell-MT";
+    overflow-x: auto;
+}
+
+.wrapper {
+    display: flex;
+    flex-direction: row;
+    width: 2220px;
+    /* 1920 + 300 control panel */
+    height: 1080px;
+}
+
+.video-area {
+    position: relative;
+    width: 1920px;
+    height: 1080px;
+    flex-shrink: 0;
+}
+
+.video-area video {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+#fg {
+    position: absolute;
+    width:1920px;
+    height:1080px;
+    z-index:2;
+}
+
+.timer {
+    font-family: "Bell-MT";
+    position: absolute;
+    /* transform: translateX(-50%); */
+    width:1920px;
+    height:1080px;
+    left: 37px;
+    top:227px;
+    display:flex;
+    z-index:3;
+    justify-content: start;
+    align-items: start;
+    font-size: 410px;
+    color: #d74430;
+    font-style: italic;
+}
+
+.timer-back {
+    font-family: "Calloveya";
+    position: absolute;
+    /* transform: translateX(-50%); */
+    width:1920px;
+    height:1080px;
+    left: 30px;
+    top:284px;
+    display:flex;
+    z-index:1;
+    justify-content: start;
+    align-items: start;
+    font-size: 480px;
+    color: #eda18b;
+    font-style: italic;
+}
+
+.startingText {
+    font-family: "Bell-MT";
+    position: absolute;
+    /* transform: translateX(-50%); */
+    width:1920px;
+    height:1080px;
+    top:120px;
+    display:flex;
+    z-index:3;
+    justify-content: center;
+    align-items: center;
+    font-size: 24px;
+    color: white;
+}
+
+.control-panel {
+    width: 300px;
+    height: 100%;
+    background: #1a1a1a;
+    color: white;
+    padding: 30px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 20px;
+    flex-shrink: 0;
+    font-family: "Bell-MT";
+}
+
+.control-panel button {
+    width: 100%;
+    padding: 15px;
+    font-size: 30px;
+    cursor: pointer;
+    background: #333;
+    border: none;
+    color: white;
+    border-radius: 8px;
+    transition: background 0.3s;
+    font-family: "Bell-MT";
+    font-weight:700;
+}
+
+.control-panel button:hover {
+    background: #555;
+}
+
+#now-playing {
+    position: absolute;
+    bottom: 64px;
+    left: 320px;
+    font-family: "Georgia";
+    font-style: italic;
+    font-size: 30px;
+    color: #d74430;
+    text-align: center;
+    z-index: 3;
+}
