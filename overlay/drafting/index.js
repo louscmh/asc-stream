@@ -30,47 +30,55 @@ class Player {
     this.seed = seed;
   }
   generateSpinnerItem() {
-    // console.log(`Generating spinner item for ${this.username} in seed ${this.seed}`);
-    let spinnerContainer = document.getElementById(
-      (`player-list-seed-${this.seed}`).toLowerCase()
-    );
+    try {
+      let spinnerContainer = document.getElementById(
+        (`player-list-seed-${this.seed}`).toLowerCase()
+      );
 
-    this.player = document.createElement('li');
-    this.player.id = `player-${this.user_id}-${this.seed}`;
-    this.player.className = 'player';
-    this.playerPfp = document.createElement('img');
-    this.playerPfp.id = `player-pfp-${this.user_id}-${this.seed}`;
-    this.playerPfp.className = 'player-pfp';
-    this.playerPfp.src = this.pfp;
-    this.playerName = document.createElement('span');
-    this.playerName.id = `player-name-${this.user_id}-${this.seed}`;
-    this.playerName.className = 'player-name';
-    this.playerName.textContent = this.username;
+      this.player = document.createElement('li');
+      this.player.id = `player-${this.user_id}-${this.seed}`;
+      this.player.className = 'player';
+      this.playerPfp = document.createElement('img');
+      this.playerPfp.id = `player-pfp-${this.user_id}-${this.seed}`;
+      this.playerPfp.className = 'player-pfp';
+      this.playerPfp.src = this.pfp;
+      this.playerName = document.createElement('span');
+      this.playerName.id = `player-name-${this.user_id}-${this.seed}`;
+      this.playerName.className = 'player-name';
+      this.playerName.textContent = this.username;
 
-    spinnerContainer.appendChild(this.player);
-    document.getElementById(this.player.id).appendChild(this.playerPfp);
-    document.getElementById(this.player.id).appendChild(this.playerName);
+      spinnerContainer.appendChild(this.player);
+      document.getElementById(this.player.id).appendChild(this.playerPfp);
+      document.getElementById(this.player.id).appendChild(this.playerName);
+    } catch (error) {
+      console.error(`Error in generateSpinnerItem for ${this.username}:`, error);
+    }
   }
+
   generateDisplayItem() {
-    let seedingContainer = document.getElementById(
-      (`seeding-container-seed-${this.seed}`).toLowerCase()
-    );
+    try {
+      let seedingContainer = document.getElementById(
+        (`seeding-container-seed-${this.seed}`).toLowerCase()
+      );
 
-    this.playerSeed = document.createElement('div');
-    this.playerSeed.id = `seed-${this.user_id}-${this.seed}`;
-    this.playerSeed.className = 'player-seed-container';
-    this.playerSeedPfp = document.createElement('img');
-    this.playerSeedPfp.id = `seed-pfp-${this.user_id}-${this.seed}`;
-    this.playerSeedPfp.className = 'seed-pfp-container';
-    this.playerSeedPfp.src = this.pfp;
-    this.playerSeedPfpName = document.createElement('span');
-    this.playerSeedPfpName.id = `seed-name-${this.user_id}-${this.seed}`;
-    this.playerSeedPfpName.className = 'seed-name-container';
-    this.playerSeedPfpName.textContent = this.username;
+      this.playerSeed = document.createElement('div');
+      this.playerSeed.id = `seed-${this.user_id}-${this.seed}`;
+      this.playerSeed.className = 'player-seed-container';
+      this.playerSeedPfp = document.createElement('img');
+      this.playerSeedPfp.id = `seed-pfp-${this.user_id}-${this.seed}`;
+      this.playerSeedPfp.className = 'seed-pfp-container';
+      this.playerSeedPfp.src = this.pfp;
+      this.playerSeedPfpName = document.createElement('span');
+      this.playerSeedPfpName.id = `seed-name-${this.user_id}-${this.seed}`;
+      this.playerSeedPfpName.className = 'seed-name-container';
+      this.playerSeedPfpName.textContent = this.username;
 
-    seedingContainer.appendChild(this.playerSeed);
-    document.getElementById(this.playerSeed.id).appendChild(this.playerSeedPfp);
-    document.getElementById(this.playerSeed.id).appendChild(this.playerSeedPfpName);
+      seedingContainer.appendChild(this.playerSeed);
+      document.getElementById(this.playerSeed.id).appendChild(this.playerSeedPfp);
+      document.getElementById(this.playerSeed.id).appendChild(this.playerSeedPfpName);
+    } catch (error) {
+      console.error(`Error in generateDisplayItem for ${this.username}:`, error);
+    }
   }
 }
 
@@ -80,15 +88,38 @@ let currentSeed = 'C';
 let spinned = false;
 let recentPlayer;
 let fadeIn = true;
+const drumRollAudio = new Audio('https://lous.s-ul.eu/zWzHPSmx');
+drumRollAudio.loop = true;
+const crowdCheerAudio = new Audio('https://lous.s-ul.eu/emo5JUnY');
 const spinnerPlayers = new Map();
 const teams = new Map()
 for (let i = 1; i <= 16; i++) {
   teams.set(i, new Team(i))
 }
 
+// unlock audio on first user interaction
+let audioUnlocked = false;
+window.addEventListener('click', function unlockAudio() {
+  if (audioUnlocked) return;
+  [drumRollAudio, crowdCheerAudio].forEach(a => {
+    a.play().then(() => a.pause()).catch(() => { });
+  });
+  audioUnlocked = true;
+  window.removeEventListener('click', unlockAudio);
+}, { once: true });
+
 // teams.get(1).players.push(new Player('123', 'TestUser', 'https://a.ppy.sh/123', 'A'));
 
 // FUNCTIONS /////////////////////////////////////////////////////////////
+
+function adjustFont(title, boundaryWidth, originalFontSize) {
+  if (title.scrollWidth > boundaryWidth) {
+    let ratio = (title.scrollWidth / boundaryWidth);
+    title.style.fontSize = `${originalFontSize / ratio}px`;
+  } else {
+    title.style.fontSize = `${originalFontSize}px`;
+  }
+}
 
 async function getUserDataSet(user_id) {
   const { data } = await axios.get("/get_user", {
@@ -121,6 +152,9 @@ async function processCSV(csvText) {
   // group by seed → array of { user, username, pfp }
   const grouped = players.reduce((acc, cur) => {
     const { seed, user, username } = cur;
+    if (!seed || !user || !username) {
+      return acc;
+    }
     if (!acc[seed]) acc[seed] = [];
     acc[seed].push({
       user,
@@ -143,6 +177,10 @@ async function processCSV(csvText) {
       // store the Player instance under its user_id
       seedMap.set(username, player);
     });
+    // ensure each Player.generateDisplayItem sees the right this
+    for (const playerObj of seedMap.values()) {
+      playerObj.generateDisplayItem();
+    }
   });
   console.log(spinnerPlayers);
   const $ul = $(`#player-list-seed-c`);
@@ -188,6 +226,9 @@ function spinDraft() {
 
   // grab the player list UL
   const $ul = $(`#player-list-seed-${currentSeed.toLowerCase()}`);
+  drumRollAudio.loop = true;
+  drumRollAudio.currentTime = 0;
+  drumRollAudio.play();
 
   // spin with bandit
   $ul.bandit({
@@ -197,6 +238,14 @@ function spinDraft() {
     decel: .4,
     spinOnLoad: true,
     done: function (finalHtml) {
+      // stop the drumroll audio
+      drumRollAudio.loop = false;
+      drumRollAudio.pause();
+      drumRollAudio.currentTime = 0;
+      // play one-off crowd-cheer audio
+      crowdCheerAudio.currentTime = 0;
+      crowdCheerAudio.play();
+
       // parse out pfp URL and player name
       const $frag = $('<div>').append(finalHtml);
       const pfp = $frag.find('img').attr('src');
@@ -209,6 +258,7 @@ function spinDraft() {
         if (!imgEl.getAttribute('src') || !nameEl.textContent.trim()) {
           imgEl.setAttribute('src', pfp);
           nameEl.textContent = name;
+          adjustFont(nameEl, 260, 48);
           applyBob(slot);
           break;
         }
@@ -237,7 +287,6 @@ function buildSpinner($ul, seed) {
   // build items from spinnerPlayers
   seedMap.forEach(player => {
     player.generateSpinnerItem();
-    player.generateDisplayItem();
   });
 
   // duplicate items until we reach the visibleCount
@@ -300,6 +349,7 @@ function confirmPlayer() {
     const seed = currentSeed;
     spinnerPlayers.get(seed).delete(recentPlayer.username);
     teams.get(currentTeam).players.push(recentPlayer);
+    document.getElementById(`seed-${recentPlayer.user_id}-${recentPlayer.seed}`).style.opacity = '0.3';
     console.log(teams);
 
     const $ul = $(`#player-list-seed-${currentSeed.toLowerCase()}`);
@@ -505,6 +555,7 @@ function buildTeamDisplay() {
       const nameEl = slot.querySelector('span.player-name');
       if (nameEl) {
         nameEl.textContent = '';
+        nameEl.style.fontSize = '48px'; // reset font size
       }
     });
   });
@@ -532,6 +583,7 @@ function buildTeamDisplay() {
     if (emptySlot) {
       emptySlot.querySelector('img.player-pfp').src = player.pfp;
       emptySlot.querySelector('span.player-name').textContent = player.username;
+      adjustFont(emptySlot.querySelector('span.player-name'), 260, 48);
     }
   });
 

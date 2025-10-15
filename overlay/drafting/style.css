@@ -119,9 +119,11 @@ html {
 }
 
 #spinner-text-front {
+    position: relative;
     font-size: 165px;
     color: #facc5b;
     font-style: italic;
+    bottom: 10px;
 }
 
 #spinner-text-back {
