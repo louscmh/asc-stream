@@ -1,0 +1,340 @@
+@font-face {
+    font-family: "Bell-MT";
+    src: url("../../_shared_assets/fonts/Bell\ MT\ Regular.otf");
+}
+
+@font-face {
+    font-family: "Calloveya";
+    src: url("../../_shared_assets/fonts/Calloveya.ttf");
+}
+
+@font-face {
+    font-family: "Callheart";
+    src: url("../../_shared_assets/fonts/Callheart.ttf");
+}
+
+@font-face {
+    font-family: "Georgia";
+    src: url("../../_shared_assets/fonts/georgia.ttf");
+}
+
+@font-face {
+    font-family: "Georgia-Bold";
+    src: url("../../_shared_assets/fonts/georgiab.ttf");
+}
+
+body,
+html {
+    margin: 0;
+    padding: 0;
+    /* background: #000; */
+    font-family: "Bell-MT";
+    overflow-x: auto;
+}
+
+.main {
+    display: flex;
+    flex-direction: row;
+    width: 2220px;
+    /* 1920 + 300 control panel */
+    height: 1080px;
+    position: relative;
+    z-index: 1;
+    color: #facc5b;
+}
+
+.video-area {
+    position: relative;
+    width: 1920px;
+    height: 1080px;
+    flex-shrink: 0;
+}
+
+.control-panel {
+    position: absolute;
+    top: 0;
+    left: 1920px;
+    height: 1020px;
+    width: 300px;
+    background: #1a1a1a;
+    color: white;
+    padding: 30px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 20px;
+    flex-shrink: 0;
+    font-family: "Bell-MT";
+    z-index: 99 !important
+}
+
+.control-panel button {
+    width: 100%;
+    padding: 15px;
+    font-size: 30px;
+    cursor: pointer;
+    background: #333;
+    border: none;
+    color: white;
+    border-radius: 8px;
+    transition: background 0.3s;
+    font-family: "Bell-MT";
+    font-weight: 700;
+}
+
+.control-panel button:hover {
+    background: #555;
+}
+
+#fg {
+    position: absolute;
+    width: 1920px;
+    height: 1080px;
+    z-index: 3;
+}
+
+#bg {
+    position: absolute;
+    width: 1920px;
+    height: 1080px;
+    top: 0px;
+    left: 0px;
+    z-index: -2;
+}
+
+#showcase-text {
+    position: absolute;
+    font-size: 104px;
+    color: #d74430;
+    top:35px;
+    left:33.6px;
+    width:fit-content;
+}
+
+#showcase-text-front {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100px;
+    width:700px;
+    overflow: hidden;
+    z-index: 2 !important;
+}
+
+#showcase-text-back {
+    position: absolute;
+    top: -49px;;
+    left: 40px;
+    font-family: "Calloveya";
+    font-size: 230px;
+    color: #f28574;
+    z-index: 1 !important;
+}
+
+#showcase-details {
+    width:520px;
+    height:712px;
+    position:absolute;
+    top:184px;
+    left:1342px;
+    z-index:5;
+    display:flex;
+    flex-direction: column;
+}
+
+#showcase-transition {
+    width:520px;
+    height:712px;
+    position:absolute;
+    top:184px;
+    left:1342px;
+    z-index:8;
+    display:flex;
+    flex-direction: column;
+}
+
+#map-background {
+    width:520px;
+    height:300px;
+    background-color:blue;
+    border-radius: 0px 0px 50px 50px;
+    overflow: hidden;
+}  
+
+#map-bg {
+    overflow: hidden;
+    height: inherit;
+    width: inherit;
+    object-fit: cover;
+}
+#map-title {
+    font-size: 36px;
+    font-family: "Georgia-Bold";
+    font-style: bold;
+    margin-inline: 20px;
+    margin-top: 20px;
+    white-space: nowrap;
+    overflow: hidden;
+    position: relative;
+}
+
+#map-title-orig, #map-title-delay {
+    height:41px;
+}
+
+#map-artist-orig, #map-artist-delay, #map-difficulty-orig, #map-difficulty-delay, #map-mapper-orig, #map-mapper-delay {
+    height:27px;
+}
+
+#map-title-delay, #map-artist-delay, #map-difficulty-delay, #map-mapper-delay {
+    position: absolute;
+    display: none;
+    top:0px;
+}
+
+#map-artist {
+    font-size: 24px;
+    font-family: "Georgia";
+    margin-inline:20px;
+    white-space: nowrap;
+}
+
+#map-difficulty {
+    font-size: 24px;
+    font-family: "Georgia";
+    margin-inline:26px;
+    margin-top:40px;
+    width:468px;
+    display:flex;
+    justify-content: end;
+    white-space: nowrap;
+}
+
+#map-mapper {
+    font-size: 24px;
+    font-family: "Georgia";
+    margin-inline:26px;
+    margin-top:35px;
+    width:468px;
+    display:flex;
+    justify-content: end;
+    white-space: nowrap;
+}
+
+#map-title-orig, #map-title-delay, #map-artist-orig, #map-artist-delay, #map-difficulty-orig, #map-difficulty-delay, #map-mapper-orig, #map-mapper-delay {
+    width:fit-content;
+}
+
+#map-stats-row-one {
+    font-size: 36px;
+    font-family: "Georgia";
+    margin-inline:26px;
+    margin-top:50px;
+    width:468px;
+    display:flex;
+}
+
+#map-sr {
+    width:234px;
+    text-align: center;
+    margin-right:30px;
+}
+
+#map-od {
+    width:234px;
+    text-align: center;
+    margin-right:20px;
+}
+
+#map-stats-row-two {
+    font-size: 36px;
+    font-family: "Georgia";
+    margin-inline:26px;
+    margin-top:34px;
+    width:468px;
+    display:flex;
+}
+
+#map-bpm {
+    width:234px;
+    text-align: center;
+    margin-left:15px;
+}
+
+#map-length {
+    width:234px;
+    text-align: center;
+    margin-left:20px;
+}
+
+#map-tags {
+    width:520px;
+    height:720px;
+    position:absolute;
+    top:446px;
+    left:1342px;
+    display:flex;
+    justify-content: space-between;
+    z-index:6;
+    transition: 500ms ease-in-out;
+}
+
+#original-tag, #custom-tag {
+    height: 46px;
+    transition: 500ms ease-in-out !important;
+}
+
+#pick-queue {
+    height: 100px;
+    width: 1000px;
+    position: absolute;
+    top: 942px;
+    left: 44px;
+    z-index:5;
+}
+
+#queue-content {
+    height:inherit;
+    width: inherit;
+    display:flex;
+    align-items: end;
+}
+
+.pick {
+    color: #d74430;
+    font-family: "Bell-MT";
+    font-size: 30px;
+    margin-right: 14px;
+    opacity:0.5;
+    margin-bottom:15px;
+    animation:500ms ease-in-out;
+    width:fit-content;
+    transition:
+      width           0.5s ease-in-out,
+      margin-right    0.5s ease-in-out,
+      margin-bottom   0.5s ease-in-out,
+      font-size       0.5s ease-in-out,
+      opacity         0.5s ease-in-out;
+}
+
+.first-pick {
+    opacity: 1 !important;
+    font-size:90px !important;
+    margin-bottom:0px !important;
+    width:fit-content !important;
+}
+
+/* #pick-rc1 {
+    transform: scaleX(0);
+    width:0;
+} */
+
+@keyframes scrollText {
+	0% {
+	  transform: translateX(100%);
+	}
+	100% {
+	  transform: translateX(-100%);
+	}
+}

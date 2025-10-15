@@ -1,0 +1,128 @@
+[
+ {
+   "pick": "RC1",
+   "beatmapId": "4990491",
+   "isOriginal": false,
+   "isCustom": false,
+   "mappers": "mapper 1"
+ },
+ {
+   "pick": "RC2",
+   "beatmapId": "4704979",
+   "isOriginal": true,
+   "isCustom": true,
+   "mappers": "mapper 1, mapper 2"
+ },
+ {
+   "pick": "RC3",
+   "beatmapId": "2502252",
+   "isOriginal": false,
+   "isCustom": false,
+   "mappers": "mapper 1"
+ },
+ {
+   "pick": "RC4",
+   "beatmapId": "5039091",
+   "isOriginal": true,
+   "isCustom": true,
+   "mappers": "mapper 1, mapper 2"
+ },
+ {
+   "pick": "RC5",
+   "beatmapId": "4866300",
+   "isOriginal": false,
+   "isCustom": false,
+   "mappers": "mapper 1"
+ },
+ {
+   "pick": "RC6",
+   "beatmapId": "3545012",
+   "isOriginal": true,
+   "isCustom": true,
+   "mappers": "mapper 1, mapper 2"
+ },
+ {
+   "pick": "RC7",
+   "beatmapId": "4747976",
+   "isOriginal": false,
+   "isCustom": false,
+   "mappers": "mapper 1"
+ },
+ {
+   "pick": "RC8",
+   "beatmapId": "4089267",
+   "isOriginal": true,
+   "isCustom": true,
+   "mappers": "mapper 1, mapper 2"
+ },
+ {
+   "pick": "HB1",
+   "beatmapId": "3800133",
+   "isOriginal": false,
+   "isCustom": false,
+   "mappers": "mapper 1"
+ },
+ {
+   "pick": "HB2",
+   "beatmapId": "814293",
+   "isOriginal": true,
+   "isCustom": true,
+   "mappers": "mapper 1, mapper 2"
+ },
+ {
+   "pick": "HB3",
+   "beatmapId": "4976647",
+   "isOriginal": false,
+   "isCustom": false,
+   "mappers": "mapper 1"
+ },
+ {
+   "pick": "LN1",
+   "beatmapId": "4850428",
+   "isOriginal": true,
+   "isCustom": true,
+   "mappers": "mapper 1, mapper 2"
+ },
+ {
+   "pick": "LN2",
+   "beatmapId": "5071143",
+   "isOriginal": false,
+   "isCustom": false,
+   "mappers": "mapper 1"
+ },
+ {
+   "pick": "LN3",
+   "beatmapId": "3183280",
+   "isOriginal": true,
+   "isCustom": true,
+   "mappers": "mapper 1, mapper 2"
+ },
+ {
+   "pick": "LN4",
+   "beatmapId": "4549037",
+   "isOriginal": false,
+   "isCustom": false,
+   "mappers": "mapper 1"
+ },
+ {
+   "pick": "LN5",
+   "beatmapId": "3283353",
+   "isOriginal": true,
+   "isCustom": true,
+   "mappers": "mapper 1, mapper 2"
+ },
+ {
+   "pick": "SV",
+   "beatmapId": "4776975",
+   "isOriginal": false,
+   "isCustom": false,
+   "mappers": "mapper 1"
+ },
+ {
+   "pick": "TB",
+   "beatmapId": "4234940",
+   "isOriginal": true,
+   "isCustom": true,
+   "mappers": "mapper 1, mapper 2"
+ }
+]

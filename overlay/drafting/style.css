@@ -366,56 +366,56 @@ html {
 }
 
 #seeding-text-front {
-    position:absolute;
-    top:34px;
-    right:39px;
-    font-size:105px;
-    color:#d74430;
+    position: absolute;
+    top: 34px;
+    right: 39px;
+    font-size: 105px;
+    color: #d74430;
     font-style: italic;
-    z-index:1;
-    opacity:0;
+    z-index: 1;
+    opacity: 0;
 }
 
 #seeding-text-back {
-    position:absolute;
+    position: absolute;
     top: 30px;
-    right:220px;
-    font-size:105px;
-    color:#f28574;
+    right: 220px;
+    font-size: 105px;
+    color: #f28574;
     font-family: "Calloveya";
     font-style: italic;
-    z-index:0;
-    opacity:0;
+    z-index: 0;
+    opacity: 0;
 }
 
 #seeding-container {
     border-radius: 60px;
     background: linear-gradient(to right, rgba(215, 68, 48, 0.6) 0%, rgba(202, 101, 85, 0.6) 100%);
-    width:1700px;
-    height:740px;
-    display:flex;
-    opacity:0;
+    width: 1700px;
+    height: 740px;
+    display: flex;
+    opacity: 0;
 }
 
 .seeding-container-seed {
-    position:absolute;
-    width:1700px;
+    position: absolute;
+    width: 1700px;
     height: 740px;
-    display:flex;
+    display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
     flex-wrap: wrap;
-    opacity:0;
+    opacity: 0;
 }
 
 .player-seed-container {
-    display:flex;
+    display: flex;
     flex-direction: row;
     justify-content: start;
     align-items: center;
-    margin-block:17.5px;
-    width:320px;
+    margin-block: 17.5px;
+    width: 320px;
 }
 
 .seed-pfp-container {
@@ -430,7 +430,7 @@ html {
 .seed-name-container {
     font-style: italic;
     font-size: 40px;
-    margin-left:10px;
+    margin-left: 10px;
     color: #facc5b;
     text-align: center;
     height: inherit;

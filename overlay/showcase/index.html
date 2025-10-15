@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="style.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <script src="../../_shared_assets/deps/reconnecting-websocket.min.js"></script>
+</head>
+
+<body>
+  <div class="main">
+    <div class="video-area">
+      <img id="bg" src="../../_shared_assets/design/showcase_bg.png">
+      <img id="fg" src="../../_shared_assets/design/showcase_fg.png">
+      <div id="showcase-transition">
+        <video id="transition-stinger" muted playsinline>
+          <source src="../../_shared_assets/design/showcase_transition.webm" type="video/webm">
+        </video>
+      </div>
+      <div id="showcase-text">
+        <div id="showcase-text-front">Qualifiers</div>
+        <div id="showcase-text-back">QL</div>
+      </div>
+      <div id="map-tags">
+        <img id="original-tag" src="../../_shared_assets/design/showcase-original-tag.png">
+        <img id="custom-tag" src="../../_shared_assets/design/showcase-custom-tag.png">
+      </div>
+      <div id="showcase-details">
+        <div id="map-background">
+          <img id="map-bg" src="../../_shared_assets/design/main_banner.png">
+        </div>
+        <div id="map-details">
+          <div id="map-title">
+            <div id="map-title-orig">MAP TITLE</div>
+            <div id="map-title-delay"></div>
+          </div>
+          <div id="map-artist">
+            <div id="map-artist-orig">MAP ARTIST</div>
+            <div id="map-artist-delay"></div>
+          </div>
+          <div id="map-difficulty">
+            <div id="map-difficulty-orig">MAP DIFFICULTY</div>
+            <div id="map-difficulty-delay"></div>
+          </div>
+          <div id="map-mapper">
+            <div id="map-mapper-orig">MAP MAPPER</div>
+            <div id="map-mapper-delay"></div>
+          </div>
+          <div id="map-stats-row-one">
+            <div id="map-sr">7.27</div>
+            <div id="map-od">9.3</div>
+          </div>
+          <div id="map-stats-row-two">
+            <div id="map-bpm">999-999</div>
+            <div id="map-length">9:59</div>
+          </div>
+        </div>
+      </div>
+      <div id="pick-queue">
+        <div id="queue-content">
+          <!-- <div class="pick first-pick" id="pick-rc1">RC1</div>
+          <div class="pick" id="pick-rc2">RC2</div>
+          <div class="pick" id="pick-rc3">RC3</div>
+          <div class="pick">RC4</div>
+          <div class="pick">RC5</div>
+          <div class="pick">RC6</div>
+          <div class="pick">RC7</div>
+          <div class="pick">RC8</div>
+          <div class="pick">HB1</div>
+          <div class="pick">HB2</div>
+          <div class="pick">HB3</div>
+          <div class="pick">LN1</div>
+          <div class="pick">LN2</div>
+          <div class="pick">LN3</div>
+          <div class="pick">LN4</div>
+          <div class="pick">LN5</div>
+          <div class="pick">LN6</div>
+          <div class="pick">SV</div>
+          <div class="pick">TB</div> -->
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="control-panel">
+    <button id="jsonUploadButton">Link Mappool JSON Data</button>
+    <input type="file" id="jsonFileInput" accept=".json" style="display:none">
+    <button id="nextStageButton" onclick="nextStage()">Move to Next Stage</button>
+    <button id="previousStageButton" onclick="previousStage()">Move to Previous Stage</button>
+  </div>
+	<script src="index.js"></script>
+  </body>
+    
+  </html>
