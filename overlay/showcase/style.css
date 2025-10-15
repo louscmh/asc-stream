@@ -277,12 +277,10 @@ html {
     display:flex;
     justify-content: space-between;
     z-index:6;
-    transition: 500ms ease-in-out;
 }
 
 #original-tag, #custom-tag {
     height: 46px;
-    transition: 500ms ease-in-out !important;
 }
 
 #pick-queue {

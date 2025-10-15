@@ -27,6 +27,7 @@ const stages = [
     { stageName: "Round of 16",    stageAcronym: "RO16" },
     { stageName: "Quarterfinals",  stageAcronym: "QF"   },
     { stageName: "Semifinals",     stageAcronym: "SF"   },
+    { stageName: "Finals",         stageAcronym: "F"    },
     { stageName: "Grand Finals",   stageAcronym: "GF"   }
 ]
 let currentStage = 0;
