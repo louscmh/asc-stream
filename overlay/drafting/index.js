@@ -232,10 +232,11 @@ function spinDraft() {
 
   // spin with bandit
   $ul.bandit({
-    speed: [40, 60],
+    speed: [50, 60],
     delay: 0,
-    autoStop: [1000, 1500],
-    decel: .4,
+    autoStop: [1500, 2000],
+    decel: 6,
+    decel: 1,
     spinOnLoad: true,
     done: function (finalHtml) {
       // stop the drumroll audio
