@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="stylesheet" href="style.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+  <script src="../../_shared_assets/deps/reconnecting-websocket.min.js"></script>
+  <script src="../../_shared_assets/deps/countUp.js"></script>
+</head>
+
+<body>
+  <div id="preLoading">Link the Mappool Json Data first!</div>
+  <div id="main">
+    <div class="video-area">
+      <div id="match-image">
+        <img id="bg" src="../../_shared_assets/design/match_bg_normal.png">
+        <img id="bg_match" src="../../_shared_assets/design/match_bg_gameplay.png">
+        <img id="fg" src="../../_shared_assets/design/match_bottom.png">
+        <img class="match-bottom-overlay-text" id="match-bottom-overlay-left"
+          src="../../_shared_assets/design/match_bottom_left_text.png">
+        <img class="match-bottom-overlay-text" id="match-bottom-overlay-right"
+          src="../../_shared_assets/design/match_bottom_right_text.png">
+      </div>
+      <div id="match-top">
+        <div id="match-top-stats-left">
+          <div id="match-top-stats-sr" class="match-top-stats">SR 5.55*</div>
+          <div id="match-top-stats-bpm" class="match-top-stats">BPM 155-155</div>
+        </div>
+        <div id="match-top-playing">
+          <div id="match-top-playing-container">
+            <div id="match-top-playing-original">Original</div>
+            <div id="match-top-playing-outline"></div>
+            <div id="match-top-playing-metadata">
+              <div id="match-top-playing-title">
+                <div id="match-top-playing-title-og">Very Long Song Name</div>
+                <div id="match-top-playing-title-delay"></div>
+              </div>
+              <div id="match-top-playing-artist">
+                <div id="match-top-playing-artist-og">Very Long Artist Name</div>
+                <div id="match-top-playing-artist-delay"></div>
+              </div>
+              <div id="match-top-playing-metadata-map">
+                <div id="match-top-playing-difficulty">Very Long Difficulty Name</div>
+                <div id="match-top-playing-mapper">Very Long Mapper Name</div>
+              </div>
+            </div>
+            <div id="match-top-playing-pick-top">RC</div>
+            <div id="match-top-playing-pick-bottom">RC</div>
+            <img id="match-top-playing-metadata-text" src="../../_shared_assets/design/match_pick_text.png">
+            <div id="match-top-playing-bg-overlay"></div>
+            <img id="match-top-playing-source" src="../../_shared_assets/design/main_banner.png"></img>
+          </div>
+        </div>
+        <div id="match-top-stats-right">
+          <div id="match-top-stats-od" class="match-top-stats">OD 9.0</div>
+          <div id="match-top-stats-length" class="match-top-stats">LEN 00:00</div>
+        </div>
+      </div>
+      <div id="pool-middle">
+        <div class="pool-mod" id="pool-rc">
+          <!-- <div class="pick-playing">
+            <div class="pick-playing-container">
+              <img class="pick-playing-indicator" src="../../_shared_assets/design/match_pick_indicator.png"></img>
+              <div class="pick-playing-win">
+                <img class="pick-playing-win-image" src="https://lous.s-ul.eu/NoNVoJCf"></img>
+                <div class="pick-playing-win-text">Win</div>
+              </div>
+              <div class="pick-playing-pick">
+                <img class="pick-playing-pick-image" src="https://lous.s-ul.eu/NoNVoJCf"></img>
+                <div class="pick-playing-pick-text">Pick</div>
+              </div>
+              <div class="pick-playing-ban">
+                <img class="pick-playing-ban-image" src="https://lous.s-ul.eu/NoNVoJCf"></img>
+                <div class="pick-playing-ban-text">Ban</div>
+              </div>
+              <div class="pick-playing-outline"></div>
+              <div class="pick-playing-metadata">
+                <div class="pick-playing-title">
+                  <div class="pick-playing-title-og">Very Long Song Name</div>
+                  <div class="pick-playing-title-delay"></div>
+                </div>
+                <div class="pick-playing-artist">
+                  <div class="pick-playing-artist-og">Very Long Artist Name</div>
+                  <div class="pick-playing-artist-delay"></div>
+                </div>
+                <div class="pick-playing-metadata-map">
+                  <div class="pick-playing-difficulty">Very Long Difficulty Name</div>
+                  <div class="pick-playing-mapper">Very Long Mapper Name</div>
+                </div>
+              </div>
+              <div class="pick-playing-pick-top">RC</div>
+              <div class="pick-playing-pick-bottom">RC</div>
+              <img class="pick-playing-metadata-text" src="../../_shared_assets/design/match_pick_text.png">
+              <div class="pick-playing-bg-overlay"></div>
+              <img class="pick-playing-source" src="../../_shared_assets/design/main_banner.png"></img>
+            </div>
+          </div> -->
+        </div>
+        <div class="pool-mod" id="pool-hb">
+        </div>
+        <div class="pool-mod" id="pool-ln">
+        </div>
+        <div class="pool-mod" id="pool-tb">
+        </div>
+        <div id="pool-picking-container">
+          <div id="pool-picking-left">Banning</div>
+          <div id="pool-picking-right">Banning</div>
+        </div>
+      </div>
+      <div id="match-middle">
+        <div id="match-middle-client">
+          <div id="match-middle-client-left">
+            <div class="match-client-row">
+              <div id="match-client-0" class="match-client">
+                <div class="match-client-outline"></div>
+                <div class="match-client-name">
+                  <div class="match-client-name-text" id="match-client-name-0"></div>
+                </div>
+                <div class="match-client-mvp" id="match-client-mvp-0">MVP</div>
+              </div>
+            </div>
+            <div class="match-client-row">
+              <div id="match-client-1" class="match-client">
+                <div class="match-client-outline"></div>
+                <div class="match-client-name">
+                  <div class="match-client-name-text" id="match-client-name-1"></div>
+                </div>
+                <div class="match-client-mvp" id="match-client-mvp-1">MVP</div>
+              </div>
+              <div id="match-client-2" class="match-client">
+                <div class="match-client-outline"></div>
+                <div class="match-client-name">
+                  <div class="match-client-name-text" id="match-client-name-2"></div>
+                </div>
+                <div class="match-client-mvp" id="match-client-mvp-2">MVP</div>
+              </div>
+            </div>
+          </div>
+          <div id="match-middle-client-right">
+            <div class="match-client-row">
+              <div id="match-client-3" class="match-client">
+                <div class="match-client-outline"></div>
+                <div class="match-client-name">
+                  <div class="match-client-name-text" id="match-client-name-3"></div>
+                </div>
+                <div class="match-client-mvp" id="match-client-mvp-3">MVP</div>
+              </div>
+            </div>
+            <div class="match-client-row">
+              <div id="match-client-4" class="match-client">
+                <div class="match-client-outline"></div>
+                <div class="match-client-name">
+                  <div class="match-client-name-text" id="match-client-name-4"></div>
+                </div>
+                <div class="match-client-mvp" id="match-client-mvp-4">MVP</div>
+              </div>
+              <div id="match-client-5" class="match-client">
+                <div class="match-client-outline"></div>
+                <div class="match-client-name">
+                  <div class="match-client-name-text" id="match-client-name-5"></div>
+                </div>
+                <div class="match-client-mvp" id="match-client-mvp-5">MVP</div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div id="match-middle-score">
+          <div id="match-middle-score-scorebar">
+            <div id="match-middle-scorebar-left">
+              <div id="match-middle-scorebar-left-content"></div>
+            </div>
+            <div id="match-middle-scorebar-right">
+              <div id="match-middle-scorebar-right-content"></div>
+            </div>
+          </div>
+          <div id="match-middle-score-values">
+            <div id="match-middle-score-left" class="match-middle-score-container">
+              <div id="match-middle-score-left-value" class="match-middle-score-value match-middle-score-animation">
+                3,000,000</div>
+              <img id="match-middle-score-left-lead" class="match-middle-score-lead"
+                src="../../_shared_assets/design/match_score_lead.png">
+            </div>
+            <div id="match-middle-score-difference">
+              <div id="match-middle-score-difference-left" class="match-middle-score-animation">⮜</div>
+              <div id="match-middle-score-difference-value">
+                100,000
+              </div>
+              <div id="match-middle-score-difference-right" class="match-middle-score-animation">⮞</div>
+            </div>
+            <div id="match-middle-score-right" class="match-middle-score-container">
+              <img id="match-middle-score-right-lead" class="match-middle-score-lead"
+                src="../../_shared_assets/design/match_score_lead.png">
+              <div id="match-middle-score-right-value" class="match-middle-score-value match-middle-score-animation">
+                3,000,000</div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div id="match-bottom">
+        <div id="match-bottom-left">
+          <img id="match-bottom-left-team-pic" class="match-bottom-team-pic" src="https://lous.s-ul.eu/NoNVoJCf"></img>
+          <div id="match-bottom-left-team-details">
+            <div id="match-bottom-left-score">
+              <!-- <div class="match-score">
+                <img class="match-score-fill match-score-toggle" src="../../_shared_assets/design/match_point_full.png">
+                <img class="match-score-outline" src="../../_shared_assets/design/match_point_empty.png">
+              </div>
+              <div class="match-score">
+                <img class="match-score-fill" src="../../_shared_assets/design/match_point_full.png">
+                <img class="match-score-outline" src="../../_shared_assets/design/match_point_empty.png">
+              </div> -->
+            </div>
+            <div id="match-bottom-left-team-name" class="match-bottom-team-name">Long ass team name</div>
+            <div id="match-bottom-left-team-seed" class="match-bottom-team-seed">
+              <div class="match-bottom-seed-text">Seed</div>
+              <div class="match-bottom-seed-value" id="match-bottom-left-team-seed-value">#01</div>
+            </div>
+          </div>
+        </div>
+        <div id="match-bottom-middle">
+          <div id="match-bottom-chat">
+            <div id="match-bottom-chat-box"></div>
+            <div id="match-bottom-chat-text">Chat</div>
+          </div>
+          <div id="match-bottom-stage">
+            <div id="match-bottom-stage-front">Round of 16</div>
+            <div id="match-bottom-stage-back">RO16</div>
+          </div>
+        </div>
+        <div id="match-bottom-right">
+          <div id="match-bottom-right-team-details">
+            <div id="match-bottom-right-score">
+              <!-- <div class="match-score">
+                <img class="match-score-fill match-score-toggle" src="../../_shared_assets/design/match_point_full.png">
+                <img class="match-score-outline" src="../../_shared_assets/design/match_point_empty.png">
+              </div>
+              <div class="match-score">
+                <img class="match-score-fill" src="../../_shared_assets/design/match_point_full.png">
+                <img class="match-score-outline" src="../../_shared_assets/design/match_point_empty.png">
+              </div> -->
+            </div>
+            <div id="match-bottom-right-team-name" class="match-bottom-team-name">Long ass team name</div>
+            <div id="match-bottom-right-team-seed" class="match-bottom-team-seed">
+              <div class="match-bottom-seed-value" id="match-bottom-right-team-seed-value">#01</div>
+              <div class="match-bottom-seed-text">Seed</div>
+            </div>
+          </div>
+          <img id="match-bottom-right-team-pic" class="match-bottom-team-pic" src="https://lous.s-ul.eu/NoNVoJCf"></img>
+        </div>
+      </div>
+    </div>
+  </div>
+  </div>
+  <div class="control-panel">
+    <div class="control-panel-title">STAGE CONTROLS</div>
+    <button id="jsonUploadButton">Link Mappool JSON Data</button>
+    <input type="file" id="jsonFileInput" accept=".json">
+    <button id="nextStageButton" onclick="nextStage()">Current Stage: RO16</button>
+    <div class="control-panel-title">UPCOMING ACTION</div>
+    <button id="turnButton" onclick="turnControl()">Left Player Ban</button>
+    <div class="control-panel-title">SCENE CONTROLS</div>
+    <button id="pickButton" onclick="hidePick()">Hide Pick/Ban Sign</button>
+    <button id="gameplayButton" onclick="promptGameplay()">Switch to Gameplay</button>
+    <!-- <button id="introButton" onclick="promptIntro()">Switch to Intro</button> -->
+    <div class="control-panel-title">OTHER CONTROLS</div>
+    <button id="undoButton" onclick="undoControl()">Undo Action</button>
+    <div class="control-panel-title">AUTO CONTROLS</div>
+    <div class="auto-controls">
+      <div class="auto-control-row">
+        <label for="autoPickCheckbox">Enable Auto-Pick</label>
+        <input type="checkbox" id="autoPickCheckbox" checked class="scaled-checkbox">
+      </div>
+      <!-- <div class="auto-control-row">
+        <label for="autoSceneCheckbox">Enable Auto-Scene</label>
+        <input type="checkbox" id="autoSceneCheckbox" checked class="scaled-checkbox">
+      </div> -->
+    </div>
+  </div>
+  <div class="chat-debug-panel">
+    <div class="control-panel-title">DEBUG CHAT</div>
+    <div id="chat-debug"></div>
+  </div>
+  <script src="index.js"></script>
+</body>
+
+</html>
