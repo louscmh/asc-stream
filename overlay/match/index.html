@@ -216,6 +216,7 @@
             <div id="match-bottom-left-team-seed" class="match-bottom-team-seed">
               <div class="match-bottom-seed-text">Seed</div>
               <div class="match-bottom-seed-value" id="match-bottom-left-team-seed-value">#01</div>
+              <div class="match-bottom-team-pick" id="match-bottom-left-team-pick">PICK</div>
             </div>
           </div>
         </div>
@@ -225,8 +226,8 @@
             <div id="match-bottom-chat-text">Chat</div>
           </div>
           <div id="match-bottom-stage">
-            <div id="match-bottom-stage-front">Round of 16</div>
-            <div id="match-bottom-stage-back">RO16</div>
+            <div id="match-bottom-stage-front">Semifinals</div>
+            <div id="match-bottom-stage-back">SF</div>
           </div>
         </div>
         <div id="match-bottom-right">
@@ -243,6 +244,7 @@
             </div>
             <div id="match-bottom-right-team-name" class="match-bottom-team-name">Long ass team name</div>
             <div id="match-bottom-right-team-seed" class="match-bottom-team-seed">
+              <div class="match-bottom-team-pick" id="match-bottom-right-team-pick">PICK</div>
               <div class="match-bottom-seed-value" id="match-bottom-right-team-seed-value">#01</div>
               <div class="match-bottom-seed-text">Seed</div>
             </div>
@@ -257,7 +259,7 @@
     <div class="control-panel-title">STAGE CONTROLS</div>
     <button id="jsonUploadButton">Link Mappool JSON Data</button>
     <input type="file" id="jsonFileInput" accept=".json">
-    <button id="nextStageButton" onclick="nextStage()">Current Stage: RO16</button>
+    <button id="nextStageButton" onclick="nextStage()">Current Stage: SF</button>
     <div class="control-panel-title">UPCOMING ACTION</div>
     <button id="turnButton" onclick="turnControl()">Left Player Ban</button>
     <div class="control-panel-title">SCENE CONTROLS</div>
@@ -272,10 +274,10 @@
         <label for="autoPickCheckbox">Enable Auto-Pick</label>
         <input type="checkbox" id="autoPickCheckbox" checked class="scaled-checkbox">
       </div>
-      <!-- <div class="auto-control-row">
+      <div class="auto-control-row">
         <label for="autoSceneCheckbox">Enable Auto-Scene</label>
         <input type="checkbox" id="autoSceneCheckbox" checked class="scaled-checkbox">
-      </div> -->
+      </div>
     </div>
   </div>
   <div class="chat-debug-panel">

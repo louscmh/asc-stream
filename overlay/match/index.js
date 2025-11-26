@@ -24,7 +24,7 @@ const stages = [
     { stageName: "Finals", stageAcronym: "F" },
     { stageName: "Grand Finals", stageAcronym: "GF" }
 ]
-let currentStage = 0;
+let currentStage = 2;
 
 const modColors = [
     { mod: "RC", color: "#FD0A07" },
@@ -48,15 +48,15 @@ let preLoading = document.getElementById("preLoading");
 
 // AUTO controls hookup
 const autoPickCheckbox = document.getElementById('autoPickCheckbox');
-// const autoSceneCheckbox = document.getElementById('autoSceneCheckbox');
+const autoSceneCheckbox = document.getElementById('autoSceneCheckbox');
 
 let autoPickEnabled = autoPickCheckbox ? autoPickCheckbox.checked : true;
-// let autoSceneEnabled = autoSceneCheckbox ? autoSceneCheckbox.checked : true;
+let autoSceneEnabled = autoSceneCheckbox ? autoSceneCheckbox.checked : true;
 
 function applyAutoSettings() {
     if (!matchManager) return;
     matchManager.autoPicker = autoPickEnabled;
-    // matchManager.autoScene = autoSceneEnabled;
+    matchManager.autoScene = autoSceneEnabled;
 }
 
 // apply when checkboxes change
@@ -67,12 +67,12 @@ if (autoPickCheckbox) {
     });
 }
 
-// if (autoSceneCheckbox) {
-//     autoSceneCheckbox.addEventListener('change', (e) => {
-//         autoSceneEnabled = e.target.checked;
-//         applyAutoSettings();
-//     });
-// }
+if (autoSceneCheckbox) {
+    autoSceneCheckbox.addEventListener('change', (e) => {
+        autoSceneEnabled = e.target.checked;
+        applyAutoSettings();
+    });
+}
 
 // ensure settings are applied once matchManager is created
 const _applyOnceInterval = setInterval(() => {
@@ -198,8 +198,8 @@ class MatchManager {
         this.bottomPlayerTwoSeed = document.getElementById("match-bottom-right-team-seed-value");
         this.bottomScoreLeft = document.getElementById("match-bottom-left-score");
         this.bottomScoreRight = document.getElementById("match-bottom-right-score");
-        // this.bottomP1Pick = document.getElementById("match-bottom-left-pick");
-        // this.bottomP2Pick = document.getElementById("match-bottom-right-pick");
+        this.bottomP1Pick = document.getElementById("match-bottom-left-team-pick");
+        this.bottomP2Pick = document.getElementById("match-bottom-right-team-pick");
         // this.bottomP1PickText = document.getElementById("match-bottom-left-pick-text");
         // this.bottomP2PickText = document.getElementById("match-bottom-right-pick-text");
 
@@ -239,7 +239,8 @@ class MatchManager {
         this.poolPickingRight = document.getElementById("pool-picking-right");
         this.poolPickingContainer = document.getElementById("pool-picking-container");
         this.mappoolScene = document.getElementById("pool-middle");
-        
+        this.matchScorebar = document.getElementById("match-middle-score");
+
     }
 
     turn() {
@@ -296,6 +297,8 @@ class MatchManager {
             this.unpulseOverview("")
             this.controllerPick.innerHTML = "Hide Pick/Ban Sign";
             this.poolPickingContainer.style.opacity = 1;
+            this.bottomP1Pick.style.opacity = 0;
+            this.bottomP2Pick.style.opacity = 0;
             // this.poolPickingContainer.style.transform = "scale(1)";
         } else {
             this.hiddenPick = true;
@@ -337,9 +340,6 @@ class MatchManager {
                 this.mappoolScene.style.animation = "mappoolSceneIn 1s cubic-bezier(0.000, 0.125, 0.000, 1.005)";
                 this.mappoolScene.style.opacity = 1;
             }.bind(this), 1000);
-            // setTimeout(function () {
-            //     this.autoSceneChange(3);
-            // }.bind(this), 25000);
         } else {
             this.controllerMatch.innerHTML = "Switch to Mappool";
             this.currentMatchScene = true;
@@ -399,26 +399,23 @@ class MatchManager {
                             this.pickCount++;
                             this.unpulseOverview(bm.layerName);
                             bm.togglePick(this.playerTurn == "left" ? this.leftPlayerDataFlag : this.rightPlayerDataFlag, this.playerTurn == "left" ? true : false, this.pickCount);
+                            this.bottomP1Pick.style.opacity = this.playerTurn == "left" ? 1 : 0;
+                            this.bottomP2Pick.style.opacity = this.playerTurn == "right" ? 1 : 0;
                             this.controllerTurn.click();
                             this.hiddenPick ? null : this.controllerPick.click();
                             // this.poolPickingContainer.style.opacity = 0;
                             // this.changeUpcoming(bm.mapData);
                             // this.undimButton(this.controllerArrow);
                             // this.togglePickVar = true;
-                            // this.effectsShimmer.style.animation = "glow 1.5s ease-in-out";
+                            // // this.effectsShimmer.style.animation = "glow 1.5s ease-in-out";
                             // setTimeout(function () {
                             //     this.effectsShimmer.style.animation = "none";
                             // }.bind(this), 1500);
-                            // setTimeout(function () {
-                            //     if (this.currentMappoolScene == 1) {
-                            //         this.autoSceneChange(1);
-                            //     } else if (this.currentMappoolScene == 3) {
-                            //         this.autoSceneChange(3);
-                            //         setTimeout(function () {
-                            //             this.autoSceneChange(1);
-                            //         }.bind(this), 5000);
-                            //     }
-                            // }.bind(this), 15000);
+                            setTimeout(function () {
+                                if (this.currentMappoolScene == 1) { // 1 = Mappool Scene
+                                    this.autoSceneChange(1);
+                                }
+                            }.bind(this), 20000);
                         }
                     }
                 } else {
@@ -441,9 +438,11 @@ class MatchManager {
                         // setTimeout(function () {
                         //     this.effectsShimmer.style.animation = "none";
                         // }.bind(this), 1500);
-                        // setTimeout(function () {
-                        //     this.autoSceneChange(1);
-                        // }.bind(this), 15000);
+                        setTimeout(function () {
+                            if (this.currentMappoolScene == 1) { // 1 = Mappool Scene
+                                this.autoSceneChange(1);
+                            }
+                        }.bind(this), 20000);
                     }
                 }
             });
@@ -648,22 +647,24 @@ class MatchManager {
             this.gameplayManager.showResults();
             this.chatbox.style.opacity = 1;
             this.stagebox.style.opacity = 0;
-            // this.autoSceneChange(2);
-            // setTimeout(function () {
-            //     this.autoSceneChange(5);
-            // }.bind(this), 30000);
+            setTimeout(function () {
+                this.autoSceneChange(1);
+                this.matchScorebar.style.opacity = 0;
+            }.bind(this), 30000);
         } else if (ipcState == 3) {
             // map has entered gameplay
             this.chatbox.style.opacity = 0;
             this.stagebox.style.opacity = 1;
-            // this.autoSceneChange(4);
+            this.matchScorebar.style.opacity = 1;
+            this.autoSceneChange(2);
         } else if (ipcState == 1) {
             // gameplay has entered idle (the lobby)
             // this.gameplayManager.hideResults();
             this.gameplayManager.reset();
             this.chatbox.style.opacity = 1;
             this.stagebox.style.opacity = 0;
-            // this.autoSceneChange(5);
+            this.matchScorebar.style.opacity = 0;
+            this.autoSceneChange(1);
         }
     }
 
@@ -689,38 +690,25 @@ class MatchManager {
             if (!this.hasBanned || !winPick.isPick) return;
             winPick.isWin ? leftWon ? this.rightWins-- : this.leftWins-- : null;
             leftWon ? this.leftWins++ : this.rightWins++;
-            winPick.toggleWin(leftWon);
+            winPick.toggleWin(leftWon ? this.leftPlayerDataFlag : this.rightPlayerDataFlag, leftWon);
             this.controllerPick.click();
             // this.checkWin();
         }
     }
 
-    // autoSceneChange(index) {
-    //     if (!this.autoScene || !this.hasBanned) return;
+    autoSceneChange(index) {
+        if (!this.autoScene || !this.hasBanned) return;
 
-    //     if (index == 1 && this.currentMappoolScene == 1) {
-    //         // change to upcoming map
-    //         this.controllerMappool.click();
-    //     } else if (index == 2 && this.currentMappoolScene == 2) {
-    //         // change to pick queue
-    //         this.controllerMappool.click();
-    //     } else if (index == 3 && this.currentMappoolScene == 3) {
-    //         // change to mappool overview
-    //         this.controllerMappool.click();
-    //     } else if (index == 4 && !this.currentMatchScene) {
-    //         // change to match scene
-    //         this.controllerMatch.click();
-    //     } else if (index == 5 && this.currentMatchScene) {
-    //         // change to mappool scene
-    //         this.controllerMatch.click();
-    //         setTimeout(function () {
-    //             this.resultSwitchVar == true ? this.controllerResults.click() : null;
-    //         }.bind(this), 10000);
-    //         setTimeout(function () {
-    //             this.autoSceneChange(3);
-    //         }.bind(this), 25000);
-    //     }
-    // }
+        if (index == 1 && this.currentMappoolScene == 1) {
+            // change to gameplay
+            this.controllerMatch.click();
+            this.currentMappoolScene = 2;
+        } else if (index == 2 && this.currentMappoolScene == 2) {
+            // change to mappool from gameplay
+            this.controllerMatch.click();
+            this.currentMappoolScene = 1;
+        }
+    }
 
     updateChat(data) {
         if (this.chatLen == data.tourney.manager.chat.length) return;

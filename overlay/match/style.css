@@ -236,6 +236,19 @@ html {
     margin-bottom: 15px;
 }
 
+.match-bottom-team-pick {
+    font-size: 18px;
+    font-style: italic;
+    border: #facc5b 4px solid;
+    border-radius: 15px;
+    background-color: #d5422e;
+    padding-inline: 15px;
+    padding-block: 3px;
+    margin-inline: 10px;
+    transition: 500ms ease-in-out;
+    opacity: 0;
+}
+
 #match-bottom-left-team-details {
     display: flex;
     flex-direction: column;
@@ -251,6 +264,7 @@ html {
 .match-score {
     display: flex;
     margin-inline: 7px;
+    width:48px;
 }
 
 .match-score-fill {
@@ -990,6 +1004,8 @@ html {
     /* background-color: rgba(0, 0, 0, 0.5); */
     display: flex;
     flex-direction: column;
+    opacity:0;
+    transition:500ms ease-in-out;
 }
 
 #match-middle-score-scorebar {
