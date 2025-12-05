@@ -34,9 +34,16 @@ body,
 html {
     margin: 0;
     padding: 0;
-    /* background: #000; */
     font-family: "Bell-MT";
-    overflow-x: auto;
+    overflow: hidden;              /* hide both scrollbars */
+    -ms-overflow-style: none;      /* IE/Edge */
+    scrollbar-width: none;         /* Firefox */
+}
+
+/* WebKit */
+body::-webkit-scrollbar,
+html::-webkit-scrollbar {
+    display: none;
 }
 
 .main {
@@ -95,6 +102,18 @@ html {
     z-index: 99 !important
 }
 
+#chat-debug-box {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    font-family: "Sora-Regular";
+    font-size: 20px;
+    display: flex;
+    align-items: center;
+    transition:500ms ease-in-out;
+    /* opacity:0; */
+}
+
 #chat-debug {
     height: 800px;
     width: 240px;
@@ -102,6 +121,7 @@ html {
     border-radius: 20px;
     display: flex;
     flex-direction: column;
+    overflow: auto; /* show scrollbar when content overflows */
 }
 
 .control-panel button {
@@ -1097,12 +1117,14 @@ html {
     height: 570px;
     width: 100%;
     display: flex;
+    align-items: center;
+    justify-content: center;
     /* background-color: rgba(0, 0, 0, 0.5); */
 }
 
 #match-middle-client-left,
 #match-middle-client-right {
-    width: 50%;
+    width: 760px;
     height: 100%;
     display: flex;
     flex-direction: column;
@@ -1122,7 +1144,7 @@ html {
 
 .match-client {
     height: 285px;
-    width: 480px;
+    width: 380px;
     position: relative;
     /* background-color: rgba(0, 0, 0, 0.5); */
 }
@@ -1150,7 +1172,8 @@ html {
     display: flex;
     align-items: center;
     justify-content: start;
-    font-size: 32px;
+    font-size: 24px;
+    font-weight: bold;
     background-color: #facc5b;
     color: #d5422e;
     border-radius: 0 0 45px 0;

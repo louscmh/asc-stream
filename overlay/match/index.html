@@ -226,8 +226,8 @@
             <div id="match-bottom-chat-text">Chat</div>
           </div>
           <div id="match-bottom-stage">
-            <div id="match-bottom-stage-front">Semifinals</div>
-            <div id="match-bottom-stage-back">SF</div>
+            <div id="match-bottom-stage-front"></div>
+            <div id="match-bottom-stage-back"></div>
           </div>
         </div>
         <div id="match-bottom-right">
@@ -259,6 +259,7 @@
     <div class="control-panel-title">STAGE CONTROLS</div>
     <button id="jsonUploadButton">Link Mappool JSON Data</button>
     <input type="file" id="jsonFileInput" accept=".json">
+    <button id="jsonDefaultButton" onclick="loadDefaultMappool()">Load Default Mappool</button>
     <button id="nextStageButton" onclick="nextStage()">Current Stage: SF</button>
     <div class="control-panel-title">UPCOMING ACTION</div>
     <button id="turnButton" onclick="turnControl()">Left Player Ban</button>
@@ -282,7 +283,9 @@
   </div>
   <div class="chat-debug-panel">
     <div class="control-panel-title">DEBUG CHAT</div>
-    <div id="chat-debug"></div>
+    <div id="chat-debug-box">
+      <div id="chat-debug"></div>
+    </div>
   </div>
   <script src="index.js"></script>
 </body>

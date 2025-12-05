@@ -1,0 +1,128 @@
+[
+ {
+   "pick": "RC1",
+   "beatmapId": "4191812",
+   "isOriginal": false,
+   "isCustom": false,
+   "mappers": "MyZterioN-"
+ },
+ {
+   "pick": "RC2",
+   "beatmapId": "3782333",
+   "isOriginal": false,
+   "isCustom": false,
+   "mappers": "0DZ0"
+ },
+ {
+   "pick": "RC3",
+   "beatmapId": "5416912",
+   "isOriginal": false,
+   "isCustom": true,
+   "mappers": "Hylotl"
+ },
+ {
+   "pick": "RC4",
+   "beatmapId": "5416885",
+   "isOriginal": false,
+   "isCustom": true,
+   "mappers": "Doshowz"
+ },
+ {
+   "pick": "RC5",
+   "beatmapId": "4310401",
+   "isOriginal": false,
+   "isCustom": false,
+   "mappers": "hna"
+ },
+ {
+   "pick": "RC6",
+   "beatmapId": "4711829",
+   "isOriginal": false,
+   "isCustom": false,
+   "mappers": "ICECAKE"
+ },
+ {
+   "pick": "RC7",
+   "beatmapId": "5416931",
+   "isOriginal": false,
+   "isCustom": true,
+   "mappers": "AutotelicBrown"
+ },
+ {
+   "pick": "RC8",
+   "beatmapId": "4501616",
+   "isOriginal": false,
+   "isCustom": false,
+   "mappers": "ERA Imperial"
+ },
+ {
+   "pick": "HB1",
+   "beatmapId": "5416946",
+   "isOriginal": true,
+   "isCustom": true,
+   "mappers": "V1do-"
+ },
+ {
+   "pick": "HB2",
+   "beatmapId": "5416949",
+   "isOriginal": false,
+   "isCustom": true,
+   "mappers": "Saemitsu"
+ },
+ {
+   "pick": "HB3",
+   "beatmapId": "3613128",
+   "isOriginal": false,
+   "isCustom": false,
+   "mappers": "Merian"
+ },
+ {
+   "pick": "LN1",
+   "beatmapId": "3888702",
+   "isOriginal": false,
+   "isCustom": false,
+   "mappers": "Hylotl"
+ },
+ {
+   "pick": "LN2",
+   "beatmapId": "5416982",
+   "isOriginal": false,
+   "isCustom": true,
+   "mappers": "YuEast 2018, [-Leon-]"
+ },
+ {
+   "pick": "LN3",
+   "beatmapId": "5338306",
+   "isOriginal": false,
+   "isCustom": false,
+   "mappers": "Saemitsu"
+ },
+ {
+   "pick": "LN4",
+   "beatmapId": "5416987",
+   "isOriginal": false,
+   "isCustom": true,
+   "mappers": "[-Leon-]"
+ },
+ {
+   "pick": "LN5",
+   "beatmapId": "5416897",
+   "isOriginal": false,
+   "isCustom": true,
+   "mappers": "[HD]Erina"
+ },
+ {
+   "pick": "SV",
+   "beatmapId": "5416900",
+   "isOriginal": false,
+   "isCustom": true,
+   "mappers": "Evirir"
+ },
+ {
+   "pick": "TB",
+   "beatmapId": "5416981",
+   "isOriginal": false,
+   "isCustom": true,
+   "mappers": "OxalicAcid"
+ }
+]

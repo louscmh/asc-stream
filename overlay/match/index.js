@@ -24,7 +24,7 @@ const stages = [
     { stageName: "Finals", stageAcronym: "F" },
     { stageName: "Grand Finals", stageAcronym: "GF" }
 ]
-let currentStage = 2;
+let currentStage = 3;
 
 const modColors = [
     { mod: "RC", color: "#FD0A07" },
@@ -174,6 +174,7 @@ class MatchManager {
         // this.resultsManager = new ResultsManager;
         // this.historyManager;
         this.currentState;
+        this.previousState;
         this.chatLen = 0;
 
         this.mappoolOverview = document.getElementById("pool-middle");
@@ -333,6 +334,7 @@ class MatchManager {
         this.dimButton(this.controllerMatch);
         this.matchSwitchVar = false;
         if (this.currentMatchScene) {
+            this.currentMappoolScene = 1;
             this.controllerMatch.innerHTML = "Switch to Gameplay";
             this.currentMatchScene = false;
             this.gameplayManager.hideGameplay();
@@ -341,6 +343,7 @@ class MatchManager {
                 this.mappoolScene.style.opacity = 1;
             }.bind(this), 1000);
         } else {
+            this.currentMappoolScene = 2;
             this.controllerMatch.innerHTML = "Switch to Mappool";
             this.currentMatchScene = true;
             this.mappoolScene.style.animation = "mappoolSceneOut 1s cubic-bezier(.45,0,1,.48)";
@@ -412,9 +415,7 @@ class MatchManager {
                             //     this.effectsShimmer.style.animation = "none";
                             // }.bind(this), 1500);
                             setTimeout(function () {
-                                if (this.currentMappoolScene == 1) { // 1 = Mappool Scene
-                                    this.autoSceneChange(1);
-                                }
+                                this.autoSceneChange(2);
                             }.bind(this), 20000);
                         }
                     }
@@ -439,9 +440,7 @@ class MatchManager {
                         //     this.effectsShimmer.style.animation = "none";
                         // }.bind(this), 1500);
                         setTimeout(function () {
-                            if (this.currentMappoolScene == 1) { // 1 = Mappool Scene
-                                this.autoSceneChange(1);
-                            }
+                            this.autoSceneChange(2);
                         }.bind(this), 20000);
                     }
                 }
@@ -637,32 +636,35 @@ class MatchManager {
     }
 
     checkState(ipcState) {
-        if (matchManager.currentState == ipcState) return;
+        if (this.currentState == ipcState) return;
+        this.previousState = this.currentState;
         this.currentState = ipcState;
 
         // map has ended and its the next player's turn
-        if (ipcState == 4) {
+        if (this.currentState == 4 && this.previousState == 3) {
             // this.gameplayManager.hidePlayerData();
-            this.markWin(this.gameplayManager.calculateResults());
-            this.gameplayManager.showResults();
             this.chatbox.style.opacity = 1;
             this.stagebox.style.opacity = 0;
+            this.markWin(this.gameplayManager.calculateResults());
+            // this.gameplayManager.showResults();
             setTimeout(function () {
                 this.autoSceneChange(1);
                 this.matchScorebar.style.opacity = 0;
             }.bind(this), 30000);
-        } else if (ipcState == 3) {
+        } else if (this.currentState == 3) {
             // map has entered gameplay
             this.chatbox.style.opacity = 0;
             this.stagebox.style.opacity = 1;
             this.matchScorebar.style.opacity = 1;
-            this.autoSceneChange(2);
-        } else if (ipcState == 1) {
+            setTimeout(function () {
+                this.autoSceneChange(2);
+            }.bind(this), 2000);
+        } else if (this.currentState == 1) {
             // gameplay has entered idle (the lobby)
             // this.gameplayManager.hideResults();
-            this.gameplayManager.reset();
             this.chatbox.style.opacity = 1;
             this.stagebox.style.opacity = 0;
+            this.gameplayManager.reset();
             this.matchScorebar.style.opacity = 0;
             this.autoSceneChange(1);
         }
@@ -699,14 +701,12 @@ class MatchManager {
     autoSceneChange(index) {
         if (!this.autoScene || !this.hasBanned) return;
 
-        if (index == 1 && this.currentMappoolScene == 1) {
+        if (index == 1 && this.currentMappoolScene == 2) {
             // change to gameplay
             this.controllerMatch.click();
-            this.currentMappoolScene = 2;
-        } else if (index == 2 && this.currentMappoolScene == 2) {
+        } else if (index == 2 && this.currentMappoolScene == 1) {
             // change to mappool from gameplay
             this.controllerMatch.click();
-            this.currentMappoolScene = 1;
         }
     }
 
@@ -1179,7 +1179,7 @@ class Client {
     reset() {
         this.updateScore(0);
         this.updateCombo(0);
-        this.clientMvp.style.opacity = 0;
+        // this.clientMvp.style.opacity = 0;
     }
 }
 
@@ -1383,21 +1383,8 @@ class GameplayManager {
         this.animationScore.matchOneScore.update(0);
         this.animationScore.matchTwoScore.update(0);
         this.animationScore.matchScoreDifference.update(0);
-        this.animationScore.matchScoreRightText.update(0);
         this.matchScoreLeftContent.style.width = "0px";
         this.matchScoreRightContent.style.width = "0px";
-        this.matchScoreLeftContainer.style.alignItems = "end";
-        this.matchScoreRightContainer.style.alignItems = "start";
-        this.matchWinningLeftContent.style.animation = "";
-        this.matchWinningLeftContent.style.width = "0%";
-        this.matchWinningRightContent.style.animation = "";
-        this.matchWinningRightContent.style.width = "0%";
-        this.matchOneScore.style.color = "Black";
-        this.matchTwoScore.style.color = "Black";
-        this.matchOneScore.style.transform = "";
-        this.matchTwoScore.style.transform = "";
-        this.matchWinningLeftWinText.style.opacity = 0;
-        this.matchWinningRightWinText.style.opacity = 0;
         this.toggleLead("center");
     }
 
@@ -1455,6 +1442,7 @@ function updateStageDisplay() {
     document.getElementById('match-bottom-stage-back').innerHTML = stageInfo.stageAcronym;
     document.getElementById('nextStageButton').innerHTML = `Current Stage: ${stageInfo.stageAcronym}`;
 }
+updateStageDisplay();
 
 async function getDataSet(beatmapID) {
     const { data } = await axios.get("/get_beatmaps", {
@@ -1515,6 +1503,14 @@ function processJSON(jsonText) {
     // initialize match manager
     matchManager = new MatchManager(beatmapData);
     matchManager.generateOverview();
+    document.getElementById('jsonDefaultButton').style.display = "none";
+    document.getElementById('jsonUploadButton').style.display = "none";
+}
+
+async function loadDefaultMappool() {
+    const response = await fetch('../../_data/default_mappool.json');
+    const defaultMappool = await response.json();
+    processJSON(JSON.stringify(defaultMappool));
 }
 
 async function makeScrollingText(title, titleDelay, rate, boundaryWidth, padding) {
