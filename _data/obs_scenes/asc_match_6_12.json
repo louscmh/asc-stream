@@ -1275,9 +1275,10 @@
             "id": "browser_source",
             "versioned_id": "browser_source",
             "settings": {
-                "url": "http://127.0.0.1:5500/overlay/match/index.html",
+                "url": "https://louscmh.github.io/asc-stream/overlay/match/",
                 "width": 2640,
-                "height": 1080
+                "height": 1080,
+                "css": ""
             },
             "mixers": 255,
             "sync": 0,
