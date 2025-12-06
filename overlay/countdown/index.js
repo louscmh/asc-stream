@@ -61,6 +61,15 @@ function resetTimer() {
   updateDisplay();
 }
 
+function hideNP() {
+  let npElement = document.getElementById('now-playing');
+  if (npElement.style.display === 'none') {
+    npElement.style.display = 'initial';
+  } else {
+    npElement.style.display = 'none';
+  }
+}
+
 updateDisplay();
 startCountdown();
 
