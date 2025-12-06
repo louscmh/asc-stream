@@ -64,7 +64,7 @@ function resetTimer() {
 updateDisplay();
 startCountdown();
 
-// socket.onmessage = async event => {
-//     let data = JSON.parse(event.data);
-//     document.getElementById('now-playing').innerHTML = data.menu.bm.metadata.title || "No Song";
-// }
+socket.onmessage = async event => {
+    let data = JSON.parse(event.data);
+    document.getElementById('now-playing').innerHTML = data.menu.bm.metadata.title || "No Song";
+}
