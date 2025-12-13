@@ -24,7 +24,7 @@ const stages = [
     { stageName: "Finals", stageAcronym: "F" },
     { stageName: "Grand Finals", stageAcronym: "GF" }
 ]
-let currentStage = 3;
+let currentStage = 4;
 
 const modColors = [
     { mod: "RC", color: "#FD0A07" },

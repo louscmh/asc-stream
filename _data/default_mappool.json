@@ -1,128 +1,128 @@
 [
  {
    "pick": "RC1",
-   "beatmapId": "4191812",
+   "beatmapId": "5429020",
    "isOriginal": false,
-   "isCustom": false,
-   "mappers": "MyZterioN-"
+   "isCustom": true,
+   "mappers": "OxalicAcid"
  },
  {
    "pick": "RC2",
-   "beatmapId": "3782333",
+   "beatmapId": "5428996",
    "isOriginal": false,
-   "isCustom": false,
-   "mappers": "0DZ0"
+   "isCustom": true,
+   "mappers": "[GB]Oceanus"
  },
  {
    "pick": "RC3",
-   "beatmapId": "5416912",
+   "beatmapId": "5429022",
    "isOriginal": false,
-   "isCustom": true,
-   "mappers": "Hylotl"
+   "isCustom": false,
+   "mappers": "[GS]hina"
  },
  {
    "pick": "RC4",
-   "beatmapId": "5416885",
+   "beatmapId": "5428998",
    "isOriginal": false,
    "isCustom": true,
-   "mappers": "Doshowz"
+   "mappers": ""
  },
  {
    "pick": "RC5",
-   "beatmapId": "4310401",
+   "beatmapId": "4942998",
    "isOriginal": false,
    "isCustom": false,
-   "mappers": "hna"
+   "mappers": ""
  },
  {
    "pick": "RC6",
-   "beatmapId": "4711829",
-   "isOriginal": false,
-   "isCustom": false,
-   "mappers": "ICECAKE"
- },
- {
-   "pick": "RC7",
-   "beatmapId": "5416931",
-   "isOriginal": false,
-   "isCustom": true,
-   "mappers": "AutotelicBrown"
- },
- {
-   "pick": "RC8",
-   "beatmapId": "4501616",
-   "isOriginal": false,
-   "isCustom": false,
-   "mappers": "ERA Imperial"
- },
- {
-   "pick": "HB1",
-   "beatmapId": "5416946",
+   "beatmapId": "5429051",
    "isOriginal": true,
    "isCustom": true,
-   "mappers": "V1do-"
- },
- {
-   "pick": "HB2",
-   "beatmapId": "5416949",
-   "isOriginal": false,
-   "isCustom": true,
-   "mappers": "Saemitsu"
- },
- {
-   "pick": "HB3",
-   "beatmapId": "3613128",
-   "isOriginal": false,
-   "isCustom": false,
-   "mappers": "Merian"
- },
- {
-   "pick": "LN1",
-   "beatmapId": "3888702",
-   "isOriginal": false,
-   "isCustom": false,
    "mappers": "Hylotl"
  },
  {
-   "pick": "LN2",
-   "beatmapId": "5416982",
+   "pick": "RC7",
+   "beatmapId": "5429037",
    "isOriginal": false,
    "isCustom": true,
-   "mappers": "YuEast 2018, [-Leon-]"
+   "mappers": "[GS]hina"
+ },
+ {
+   "pick": "RC8",
+   "beatmapId": "3114628",
+   "isOriginal": false,
+   "isCustom": false,
+   "mappers": ""
+ },
+ {
+   "pick": "HB1",
+   "beatmapId": "4702582",
+   "isOriginal": false,
+   "isCustom": false,
+   "mappers": ""
+ },
+ {
+   "pick": "HB2",
+   "beatmapId": "4994642",
+   "isOriginal": false,
+   "isCustom": false,
+   "mappers": ""
+ },
+ {
+   "pick": "HB3",
+   "beatmapId": "5429065",
+   "isOriginal": false,
+   "isCustom": true,
+   "mappers": "Muses"
+ },
+ {
+   "pick": "LN1",
+   "beatmapId": "5429076",
+   "isOriginal": false,
+   "isCustom": true,
+   "mappers": "Hytex"
+ },
+ {
+   "pick": "LN2",
+   "beatmapId": "5428989",
+   "isOriginal": false,
+   "isCustom": true,
+   "mappers": "Toaph Daddy"
  },
  {
    "pick": "LN3",
-   "beatmapId": "5338306",
-   "isOriginal": false,
-   "isCustom": false,
-   "mappers": "Saemitsu"
- },
- {
-   "pick": "LN4",
-   "beatmapId": "5416987",
-   "isOriginal": false,
-   "isCustom": true,
-   "mappers": "[-Leon-]"
- },
- {
-   "pick": "LN5",
-   "beatmapId": "5416897",
+   "beatmapId": "5429118",
    "isOriginal": false,
    "isCustom": true,
    "mappers": "[HD]Erina"
  },
  {
+   "pick": "LN4",
+   "beatmapId": "3902883",
+   "isOriginal": false,
+   "isCustom": false,
+   "mappers": ""
+ },
+ {
+   "pick": "LN5",
+   "beatmapId": "4276650",
+   "isOriginal": false,
+   "isCustom": false,
+   "mappers": ""
+ },
+ {
    "pick": "SV",
-   "beatmapId": "5416900",
+   "beatmapId": "5429010",
    "isOriginal": false,
    "isCustom": true,
-   "mappers": "Evirir"
+   "mappers": "Mafufu"
  },
  {
    "pick": "TB",
-   "beatmapId": "5416981",
-   "isOriginal": false,
+   "beatmapId": "5429125",
+   "isOriginal": true,
    "isCustom": true,
-   "mappers": "OxalicAcid"
+   "mappers": "[-Leon-], [Crz]FolAH1217, [GB]Oceanus, [GB]Rick, [GS]hina"
  }
 ]
